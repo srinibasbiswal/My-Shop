@@ -2,11 +2,16 @@
 :root {
     --primary: #1e87f0;
     --white: #ffffff;
+    --black: #000000;
     --greyDark: #9baacf;
 }
 
 .textColorWhite {
     color: var(--white) !important;
+}
+
+.textColorBlack {
+    color: var(--black) !important;
 }
 
 .backgroundPrimary {
