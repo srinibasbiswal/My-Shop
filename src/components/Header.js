@@ -74,7 +74,9 @@ function Header() {
                 className={`uk-offcanvas uk-offcanvas-content`}
             >
                 <div className={`uk-offcanvas-bar ${styles.backgroundPrimary}`}>
-                    <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+                    <ul
+                        className={`uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical`}
+                    >
                         <li className={`uk-navbar-item`}>
                             <a
                                 className={`uk-logo ${styles.textColorWhite} uk-padding-remove`}
@@ -83,7 +85,7 @@ function Header() {
                                 Logo
                             </a>
                         </li>
-                        <li class="uk-active">
+                        <li className={`uk-active`}>
                             <button
                                 className={`uk-offcanvas-close uk-close`}
                                 data-uk-icon="icon: close"
