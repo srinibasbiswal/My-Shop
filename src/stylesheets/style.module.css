@@ -1,0 +1,14 @@
+/* Generic */
+:root {
+    --primary: #1e87f0;
+    --white: #ffffff;
+    --greyDark: #9baacf;
+}
+
+.textColorWhite {
+    color: var(--white) !important;
+}
+
+.backgroundPrimary {
+    background-color: var(--primary) !important;
+}
