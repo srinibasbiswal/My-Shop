@@ -7,7 +7,7 @@ import FooterContainer from "../containers/FooterContainer";
 
 function HomePage() {
     return (
-        <div>
+        <React.Fragment>
             <HeaderContainer />
             <Slider />
             <ProductSlider />
@@ -16,7 +16,7 @@ function HomePage() {
             <ProductSlider />
             <ProductSlider />
             <FooterContainer />
-        </div>
+        </React.Fragment>
     );
 }
 
