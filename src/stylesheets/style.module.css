@@ -17,3 +17,8 @@
 .backgroundPrimary {
     background-color: var(--primary) !important;
 }
+
+/* Footer */
+.FooterLink {
+    min-height: 30px !important;
+}

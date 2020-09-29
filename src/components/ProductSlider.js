@@ -12,7 +12,7 @@ function ProductSlider() {
             </h3>
             <div
                 className={`uk-position-relative uk-visible-toggle uk-light uk-slider uk-margin-small-bottom`}
-                tabindex="-1"
+                tabIndex="-1"
                 uk-slider={`true`}
             >
                 <ul
