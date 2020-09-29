@@ -1,6 +1,7 @@
 import React from "react";
 import ProductSlider from "../components/ProductSlider";
 import Slider from "../components/Slider";
+import StaticBanner from "../components/StaticBanner";
 import HeaderContainer from "../containers/HeaderContainer";
 
 function HomePage() {
@@ -9,6 +10,7 @@ function HomePage() {
             <HeaderContainer />
             <Slider />
             <ProductSlider />
+            <StaticBanner />
         </div>
     );
 }
