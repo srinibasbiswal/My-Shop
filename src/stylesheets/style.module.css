@@ -22,3 +22,29 @@
 .FooterLink {
     min-height: 30px !important;
 }
+
+/* Cart */
+
+.quantityControlBorder {
+    border-style: solid;
+    border-width: thin;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.quantityControlList {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    list-style: none;
+}
+
+.quantityControl_SmallDevice {
+    right: 0 !important;
+    position: absolute !important;
+    max-width: 100%;
+}
+
+.removeItem_SmallDevice {
+    top: unset !important;
+}

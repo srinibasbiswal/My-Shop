@@ -12,12 +12,12 @@ function CartPage() {
                 uk-grid={"true"}
                 uk-height-match={`target: > div > .uk-card`}
             >
-                <div class="uk-width-2-3">
-                    <div class="uk-card uk-card-default uk-card-body">
+                <div class=" uk-width-1-1@s uk-width-2-3@m">
+                    <div class="uk-card uk-card-default">
                         <CartProductList />
                     </div>
                 </div>
-                <div class="uk-width-1-3">
+                <div class="uk-width-1-3 uk-visible@m">
                     <div class="uk-card uk-card-default uk-card-body">
                         <div uk-sticky={`true ; offset: 100`}>
                             <table class="uk-table">
