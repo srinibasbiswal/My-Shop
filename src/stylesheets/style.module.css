@@ -52,3 +52,10 @@
 .TotalPrice_SmallDevice {
     z-index: 1500;
 }
+
+.ProductImg {
+    margin-top: 5px;
+}
+.ProductDesc {
+    padding: 2rem 3rem !important;
+}
