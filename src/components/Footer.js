@@ -6,7 +6,7 @@ function Footer() {
         <div>
             <hr className={`uk-divider-icon`} />
             <div
-                class="uk-grid-divider uk-child-width-expand@s uk-margin-small-bottom"
+                className={`uk-grid-divider uk-child-width-expand@s uk-margin-small-bottom`}
                 uk-grid={"true"}
             >
                 <div>
