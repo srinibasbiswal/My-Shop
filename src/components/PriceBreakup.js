@@ -4,10 +4,10 @@ import styles from "../stylesheets/style.module.css";
 function PriceBreakup() {
     return (
         <React.Fragment>
-            <div class="uk-width-1-3 uk-visible@m">
-                <div class="uk-card uk-card-default uk-card-body">
+            <div className={`uk-width-1-3 uk-visible@m`}>
+                <div className={`uk-card uk-card-default uk-card-body`}>
                     <div uk-sticky={`true ; offset: 100`}>
-                        <table class="uk-table">
+                        <table className={`uk-table`}>
                             <caption>Price Distribution</caption>
                             <tbody>
                                 <tr>
@@ -29,7 +29,9 @@ function PriceBreakup() {
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
+                        <button
+                            className={`uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom`}
+                        >
                             Place Order
                         </button>
                     </div>
@@ -61,11 +63,11 @@ function PriceBreakup() {
                                     >
                                         Close Price Breakup{" "}
                                         <span
-                                            class="uk-margin-small-right"
+                                            className={`uk-margin-small-right`}
                                             uk-icon="close"
                                         ></span>
                                     </button>
-                                    <table class="uk-table">
+                                    <table className={`uk-table`}>
                                         <tbody className={`uk-text-bold`}>
                                             <tr>
                                                 <td>Amount</td>
