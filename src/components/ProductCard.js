@@ -1,6 +1,7 @@
 import React from "react";
 import slider1 from "../assets/images/img1.jpg";
 import styles from "../stylesheets/style.module.css";
+import { Link } from "react-router-dom";
 
 function ProductCard() {
     return (
@@ -9,7 +10,9 @@ function ProductCard() {
                 <img src={slider1} alt="" className={`uk-border-rounded`} />
             </div>
             <div className={`uk-card-body uk-text-center  uk-padding-small`}>
-                <h3 className={`uk-card-title`}>Item Name</h3>
+                <Link to="/product">
+                    <h3 className={`uk-card-title`}>Item Name</h3>
+                </Link>
                 <p>
                     MRP : <s>&#x20B9; 100</s>
                     <br />

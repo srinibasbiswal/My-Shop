@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "../stylesheets/style.module.css";
 
 function Header() {
@@ -17,12 +18,14 @@ function Header() {
                             ></a>
                         </li>
                         <li className={`uk-navbar-item`}>
-                            <a
-                                className={`uk-logo ${styles.textColorWhite} uk-padding-remove`}
-                                href="#"
-                            >
-                                Logo
-                            </a>
+                            <Link to="/">
+                                <a
+                                    className={`uk-logo ${styles.textColorWhite} uk-padding-remove`}
+                                    href="#"
+                                >
+                                    Logo
+                                </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -52,11 +55,13 @@ function Header() {
                             </form>
                         </li>
                         <li>
-                            <a
-                                href="#"
-                                data-uk-icon="icon: cart"
-                                className={`${styles.textColorWhite}`}
-                            ></a>
+                            <Link to="/cart">
+                                <a
+                                    href="#"
+                                    data-uk-icon="icon: cart"
+                                    className={`${styles.textColorWhite}`}
+                                ></a>
+                            </Link>
                         </li>
                         <li className={`uk-visible@m`}>
                             <a
