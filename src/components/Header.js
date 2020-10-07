@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styles from "../stylesheets/style.module.css";
+import { addItem } from "../actions/addItem";
+import { useDispatch } from "react-redux";
 
 function Header() {
+    const counter = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+
     return (
         <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
             <nav
@@ -61,9 +67,16 @@ function Header() {
                                     data-uk-icon="icon: cart"
                                     className={`${styles.textColorWhite}`}
                                 ></a>
+                                {counter}
                             </Link>
                         </li>
                         <li className={`uk-visible@m`}>
+                            <button
+                                className={`uk-button`}
+                                onClick={() => dispatch(addItem())}
+                            >
+                                +
+                            </button>
                             <a
                                 href="#"
                                 data-uk-icon="icon: info"
