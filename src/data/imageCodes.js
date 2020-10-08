@@ -1,5 +1,5 @@
-import { demoImg } from "./images/demoImg.png";
+import demoImg from "./images/demoImg.png";
 
 export const imageCodes = {
-    demoimg: demoImg,
+    demoImg: demoImg,
 };

@@ -9,7 +9,7 @@ export const products = [
         code: "LA01",
         price: 8.0,
         realPrice: 10.0,
-        imageCodes: [imageCodes.demoimg],
+        imageCodes: [imageCodes.demoImg],
         primaryImageCode: imageCodes.demoImg,
         weight: 50.0,
         productType: productTypes.ITEM,

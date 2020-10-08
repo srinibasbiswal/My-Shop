@@ -63,7 +63,14 @@ function ProductSlider(props) {
                         {productList.map((product, index) => {
                             return (
                                 <li>
-                                    <ProductCard />
+                                    <ProductCard
+                                        productName={product.name}
+                                        price={product.price}
+                                        realPrice={product.realPrice}
+                                        primaryImageCode={
+                                            product.primaryImageCode
+                                        }
+                                    />
                                 </li>
                             );
                         })}
