@@ -19,5 +19,4 @@ export const category = [
         imageCodes: [imageCodes.demoImg],
         categoryPrimaryImage: imageCodes.demoImg,
     },
-    \,
 ];
