@@ -1,4 +1,4 @@
-import imageCodes from "./imageCodes";
+import { imageCodes } from "./imageCodes";
 
 export const category = [
     {

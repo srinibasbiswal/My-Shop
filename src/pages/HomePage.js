@@ -12,9 +12,9 @@ function HomePage() {
             <Slider />
             <ProductSlider />
             <StaticBanner />
-            <ProductSlider />
-            <ProductSlider />
-            <ProductSlider />
+            <ProductSlider categoryCode={`CH001`} />
+            <ProductSlider categoryCode={`CH001`} />
+            <ProductSlider categoryCode={`CH001`} />
             <FooterContainer />
         </React.Fragment>
     );
