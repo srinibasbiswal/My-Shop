@@ -15,6 +15,8 @@ export const products = [
         productType: productTypes.ITEM,
         categoryCode: "CH001",
         weightUOM: weightUOMs.KG,
+        isTopic : true,
+        topicCode : "TR01"
     },
     {
         id: "UC01",
@@ -54,5 +56,7 @@ export const products = [
         productType: productTypes.ITEM,
         categoryCode: "WP001",
         weightUOM: weightUOMs.KG,
+        isTopic : true,
+        topicCode : "TR01"
     },
 ];

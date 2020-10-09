@@ -10,11 +10,11 @@ function HomePage() {
         <React.Fragment>
             <HeaderContainer />
             <Slider />
-            <ProductSlider />
+            <ProductSlider topicCode={`TR01`} />
             <StaticBanner />
             <ProductSlider categoryCode={`CH001`} />
-            <ProductSlider categoryCode={`CH001`} />
-            <ProductSlider categoryCode={`CH001`} />
+            <ProductSlider categoryCode={`DT001`} />
+            <ProductSlider categoryCode={`WP001`} />
             <FooterContainer />
         </React.Fragment>
     );

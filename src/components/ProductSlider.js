@@ -3,6 +3,7 @@ import styles from "../stylesheets/style.module.css";
 import ProductCard from "./ProductCard";
 import { products } from "../data/prodcuts";
 import { category } from "../data/category";
+import { topics } from "../data/topics";
 
 function ProductSlider(props) {
     const [productList, setproductList] = useState([]);
@@ -10,38 +11,55 @@ function ProductSlider(props) {
 
     useEffect(() => {
         function fetchData() {
-            if (props !== undefined && props.categoryCode !== undefined) {
+            if (props !== undefined) {
                 var filteredProducts = [];
-                filteredProducts = products.filter(function (item) {
-                    return item.categoryCode === props.categoryCode;
-                });
+                if (props.categoryCode !== undefined){
+                    filteredProducts = products.filter(function (item) {
+                        return item.categoryCode === props.categoryCode;
+                    });
+                    var categoryObj = {};
+                    categoryObj = category.filter(function (cat) {
+                        return cat.id === props.categoryCode;
+                    })[0];
+
+                    if (categoryObj !== undefined && categoryObj != {}) {
+                        setsliderTitle(categoryObj.name);
+                    }
+                }else if(props.topicCode !== undefined){
+                    filteredProducts = products.filter(function (item) {
+                        return item.isTopic === true &&
+                        item.topicCode === props.topicCode;
+                    });
+                    var topicObj = {};
+                    topicObj = topics.filter(function (topic) {
+                        return topic.code === props.topicCode;
+                    })[0];                    
+
+                    if (topicObj !== undefined && topicObj != {}) {
+                        setsliderTitle(topicObj.topicName);
+                    }
+                }
                 if (
                     filteredProducts !== undefined &&
                     filteredProducts != [] &&
-                    filteredProducts.length > 1
+                    filteredProducts.length > 0
                 ) {
-                    setproductList(filteredProducts);
-                    console.log(productList);
+                    setproductList(filteredProducts);                    
                 }
-                var categoryObj = {};
-                categoryObj = category.filter(function (cat) {
-                    return cat.id === props.categoryCode;
-                })[0];
-
-                if (categoryObj !== undefined && categoryObj != {}) {
-                    setsliderTitle(categoryObj.name);
-                }
+                
             }
         }
         fetchData();
     }, []);
 
+    console.log(props.categoryCode);
     console.log(productList);
+    console.log(sliderTitle);
 
     if (
         productList !== undefined &&
         productList !== [] &&
-        productList.length > 1 &&
+        productList.length > 0 &&
         sliderTitle !== undefined &&
         sliderTitle !== ""
     ) {
