@@ -26,7 +26,7 @@ function ProductCard(props) {
 				<div
 					className={`uk-card-body uk-text-center  uk-padding-small`}
 				>
-					<Link to="/product">
+					<Link to={`/product/${props.id}`}>
 						<h3 className={`uk-card-title`}>{props.productName}</h3>
 					</Link>
 					<p>

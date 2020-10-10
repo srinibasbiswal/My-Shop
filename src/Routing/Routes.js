@@ -16,7 +16,7 @@ function Routes() {
 				exact
 				component={ResultPage}
 			/>
-			<Route path="/product" exact component={ProductPage} />
+			<Route path="/product/:id" exact component={ProductPage} />
 			<Route path="/cart" exact component={CartPage} />
 			<Route path="/checkout" exact component={CheckoutPage} />
 			{/* TODO : Add route for 404 page */}
