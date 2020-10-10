@@ -7,6 +7,7 @@ import { products } from "../data/prodcuts";
 function SearchResult(props) {
 	const [showCategoryCards, showshowCategoryCards] = useState(true);
 	const [productList, setProductList] = useState([]);
+	const [categoryCodeList, setCategoryCodeList] = useState([]);
 
 	useEffect(() => {
 		function setCategoryShowValue() {
@@ -21,22 +22,49 @@ function SearchResult(props) {
 		function getProducts() {
 			if (props.searchType !== undefined && props.search !== undefined) {
 				var filteredProducts = [];
+				var categoryCodes = [];
+				filteredProducts = filterProducts();
 				switch (props.searchType) {
 					case searchTypes.ITEM:
-						filteredProducts = products.filter(function (item) {
-							return item.name
-								.toLowerCase()
-								.includes(props.search.toLowerCase());
-						});
 						setProductList(filteredProducts);
+						if (
+							filteredProducts !== undefined &&
+							filteredProducts !== []
+						) {
+							filteredProducts.forEach((product) => {
+								categoryCodes.push(product.categoryCode);
+							});
+						}
+						if (categoryCodes != [] && categoryCodes.length > 0) {
+							setCategoryCodeList(categoryCodes);
+						}
 						break;
 					case searchTypes.CATEGORY:
+						if (
+							filteredProducts !== undefined &&
+							filteredProducts !== []
+						) {
+							filteredProducts.forEach((product) => {
+								categoryCodes.push(product.categoryCode);
+							});
+						}
+						if (categoryCodes != [] && categoryCodes.length > 0) {
+							setCategoryCodeList(categoryCodes);
+						}
 						break;
-
 					default:
 						break;
 				}
 			}
+		}
+
+		function filterProducts() {
+			var filteredProducts = products.filter(function (item) {
+				return item.name
+					.toLowerCase()
+					.includes(props.search.toLowerCase());
+			});
+			return filteredProducts;
 		}
 
 		setCategoryShowValue();
@@ -55,8 +83,12 @@ function SearchResult(props) {
 		console.log(productList);
 		return (
 			<React.Fragment>
+				{console.log(categoryCodeList)}
 				{showCategoryCards ? (
-					<CategoriesCards search={props.search} />
+					<CategoriesCards
+						categoryCodeList={categoryCodeList}
+						search={props.search}
+					/>
 				) : null}
 				<ResultProducts results={productList} search={props.search} />
 			</React.Fragment>
