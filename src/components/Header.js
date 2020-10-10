@@ -1,128 +1,138 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import styles from "../stylesheets/style.module.css";
 import { addItem } from "../actions/addItem";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { searchTypes } from "../data/enums/searchType";
+import styles from "../stylesheets/style.module.css";
 
-function Header() {
-    const counter = useSelector((state) => state.cart);
-    const dispatch = useDispatch();
+function Header(props) {
+	const counter = useSelector((state) => state.cart);
+	const dispatch = useDispatch();
+	const searchType = searchTypes.ITEM;
+	const searchValue = "lays";
 
-    return (
-        <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
-            <nav
-                className={`uk-navbar-container uk-navbar ${styles.backgroundPrimary}`}
-            >
-                <div className={`uk-navbar-left`}>
-                    <ul className={`uk-navbar-nav`}>
-                        <li className={`uk-navbar-item`}>
-                            <a
-                                uk-toggle="target: #menuOverlay"
-                                data-uk-icon="icon: menu"
-                                className={`${styles.textColorWhite} uk-navbar-toggle uk-navbar-toggle-icon uk-hidden@m uk-padding-remove`}
-                            ></a>
-                        </li>
-                        <li className={`uk-navbar-item`}>
-                            <Link to="/">
-                                <a
-                                    className={`uk-logo ${styles.textColorWhite} uk-padding-remove`}
-                                    href="#"
-                                >
-                                    Logo
-                                </a>
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-                <div className={`uk-navbar-center`}>
-                    <ul className={`uk-navbar-nav`}>
-                        <li className={`uk-navbar-item`}>
-                            <form action="javascript:void(0)">
-                                <input
-                                    className={`uk-input uk-form-width-large uk-border-rounded uk-visible@m`}
-                                    type="text"
-                                    placeholder="Search item1, item2 and more ... "
-                                />
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+	return (
+		<div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
+			<nav
+				className={`uk-navbar-container uk-navbar ${styles.backgroundPrimary}`}
+			>
+				<div className={`uk-navbar-left`}>
+					<ul className={`uk-navbar-nav`}>
+						<li className={`uk-navbar-item`}>
+							<a
+								uk-toggle="target: #menuOverlay"
+								data-uk-icon="icon: menu"
+								className={`${styles.textColorWhite} uk-navbar-toggle uk-navbar-toggle-icon uk-hidden@m uk-padding-remove`}
+							></a>
+						</li>
+						<li className={`uk-navbar-item`}>
+							<Link to="/">
+								<a
+									className={`uk-logo ${styles.textColorWhite} uk-padding-remove`}
+									href="#"
+								>
+									Logo
+								</a>
+							</Link>
+						</li>
+					</ul>
+				</div>
+				<div className={`uk-navbar-center`}>
+					<ul className={`uk-navbar-nav`}>
+						<li className={`uk-navbar-item`}>
+							<form action="javascript:void(0)">
+								<input
+									className={`uk-input uk-form-width-large uk-border-rounded uk-visible@m`}
+									type="text"
+									placeholder="Search item1, item2 and more ... "
+								/>
+								<Link
+									to={`/${searchType}/search/${searchValue}`}
+								>
+									<button className={`uk-button`}>
+										{" "}
+										Search{" "}
+									</button>
+								</Link>
+							</form>
+						</li>
+					</ul>
+				</div>
 
-                <div className={`uk-navbar-right`}>
-                    <ul className={`uk-navbar-nav`}>
-                        <li className={`uk-navbar-item`}>
-                            <form>
-                                <input
-                                    className={`uk-input uk-form-width-medium uk-border-rounded uk-hidden@m uk-padding-remove-right`}
-                                    type="text"
-                                    placeholder="Search item1 and more ... "
-                                />
-                            </form>
-                        </li>
-                        <li>
-                            <Link to="/cart">
-                                <a
-                                    href="#"
-                                    data-uk-icon="icon: cart"
-                                    className={`${styles.textColorWhite}`}
-                                ></a>
-                                {counter}
-                            </Link>
-                        </li>
-                        <li className={`uk-visible@m`}>
-                            <button
-                                className={`uk-button`}
-                                onClick={() => dispatch(addItem())}
-                            >
-                                +
-                            </button>
-                            <a
-                                href="#"
-                                data-uk-icon="icon: info"
-                                className={`${styles.textColorWhite}`}
-                            ></a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <div
-                id="menuOverlay"
-                data-uk-offcanvas="mode: push"
-                className={`uk-offcanvas uk-offcanvas-content`}
-            >
-                <div className={`uk-offcanvas-bar ${styles.backgroundPrimary}`}>
-                    <ul
-                        className={`uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical`}
-                    >
-                        <li className={`uk-navbar-item`}>
-                            <a
-                                className={`uk-logo ${styles.textColorWhite} uk-padding-remove`}
-                                href="#"
-                            >
-                                Logo
-                            </a>
-                        </li>
-                        <li className={`uk-active`}>
-                            <button
-                                className={`uk-offcanvas-close uk-close`}
-                                data-uk-icon="icon: close"
-                            ></button>
-                        </li>
-                        <li className={`uk-parent`}>
-                            <a href="#">Menu 1</a>
-                        </li>
-                        <li className={`uk-parent`}>
-                            <a href="#">Menu 2</a>
-                        </li>
-                        <li className={`uk-parent`}>
-                            <a href="#">Menu 3</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    );
+				<div className={`uk-navbar-right`}>
+					<ul className={`uk-navbar-nav`}>
+						<li className={`uk-navbar-item`}>
+							<form>
+								<input
+									className={`uk-input uk-form-width-medium uk-border-rounded uk-hidden@m uk-padding-remove-right`}
+									type="text"
+									placeholder="Search item1 and more ... "
+								/>
+							</form>
+						</li>
+						<li>
+							<Link to="/cart">
+								<a
+									href="#"
+									data-uk-icon="icon: cart"
+									className={`${styles.textColorWhite}`}
+								></a>
+								{counter}
+							</Link>
+						</li>
+						<li className={`uk-visible@m`}>
+							<button
+								className={`uk-button`}
+								onClick={() => dispatch(addItem())}
+							>
+								+
+							</button>
+							<a
+								href="#"
+								data-uk-icon="icon: info"
+								className={`${styles.textColorWhite}`}
+							></a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<div
+				id="menuOverlay"
+				data-uk-offcanvas="mode: push"
+				className={`uk-offcanvas uk-offcanvas-content`}
+			>
+				<div className={`uk-offcanvas-bar ${styles.backgroundPrimary}`}>
+					<ul
+						className={`uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical`}
+					>
+						<li className={`uk-navbar-item`}>
+							<a
+								className={`uk-logo ${styles.textColorWhite} uk-padding-remove`}
+								href="#"
+							>
+								Logo
+							</a>
+						</li>
+						<li className={`uk-active`}>
+							<button
+								className={`uk-offcanvas-close uk-close`}
+								data-uk-icon="icon: close"
+							></button>
+						</li>
+						<li className={`uk-parent`}>
+							<a href="#">Menu 1</a>
+						</li>
+						<li className={`uk-parent`}>
+							<a href="#">Menu 2</a>
+						</li>
+						<li className={`uk-parent`}>
+							<a href="#">Menu 3</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default Header;
