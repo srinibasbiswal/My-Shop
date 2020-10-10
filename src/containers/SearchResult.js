@@ -58,7 +58,7 @@ function SearchResult(props) {
 				{showCategoryCards ? (
 					<CategoriesCards search={props.search} />
 				) : null}
-				<ResultProducts search={props.search} />
+				<ResultProducts results={productList} search={props.search} />
 			</React.Fragment>
 		);
 	} else {
