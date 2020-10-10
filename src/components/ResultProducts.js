@@ -61,6 +61,8 @@ function ResultProducts(props) {
 		} else {
 			return <div>No Results found</div>;
 		}
+	} else {
+		return <div>Some Error Occured</div>;
 	}
 }
 
