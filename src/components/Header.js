@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 import { addItem } from "../actions/addItem";
 import { useSelector, useDispatch } from "react-redux";
 import { searchTypes } from "../data/enums/searchType";
@@ -9,7 +10,16 @@ function Header(props) {
 	const counter = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 	const searchType = searchTypes.ITEM;
-	const searchValue = "lays";
+	const [searchValue, setSearchValue] = useState("");
+
+	const setSearch = (event) => {
+		const target = event.target;
+		setSearchValue(target.value);
+	};
+
+	const handleSubmit = (e) => {
+		props.history.push(`/${searchType}/search/${searchValue}`);
+	};
 
 	return (
 		<div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
@@ -40,20 +50,14 @@ function Header(props) {
 				<div className={`uk-navbar-center`}>
 					<ul className={`uk-navbar-nav`}>
 						<li className={`uk-navbar-item`}>
-							<form action="javascript:void(0)">
+							<form onSubmit={handleSubmit}>
 								<input
 									className={`uk-input uk-form-width-large uk-border-rounded uk-visible@m`}
 									type="text"
 									placeholder="Search item1, item2 and more ... "
+									value={searchValue}
+									onChange={setSearch}
 								/>
-								<Link
-									to={`/${searchType}/search/${searchValue}`}
-								>
-									<button className={`uk-button`}>
-										{" "}
-										Search{" "}
-									</button>
-								</Link>
 							</form>
 						</li>
 					</ul>
@@ -62,11 +66,13 @@ function Header(props) {
 				<div className={`uk-navbar-right`}>
 					<ul className={`uk-navbar-nav`}>
 						<li className={`uk-navbar-item`}>
-							<form>
+							<form onSubmit={handleSubmit}>
 								<input
 									className={`uk-input uk-form-width-medium uk-border-rounded uk-hidden@m uk-padding-remove-right`}
 									type="text"
-									placeholder="Search item1 and more ... "
+									placeholder="Search item1, item2 and more ... "
+									value={searchValue}
+									onChange={setSearch}
 								/>
 							</form>
 						</li>
@@ -81,12 +87,12 @@ function Header(props) {
 							</Link>
 						</li>
 						<li className={`uk-visible@m`}>
-							<button
+							{/* <button
 								className={`uk-button`}
 								onClick={() => dispatch(addItem())}
 							>
 								+
-							</button>
+							</button> */}
 							<a
 								href="#"
 								data-uk-icon="icon: info"
@@ -135,4 +141,4 @@ function Header(props) {
 	);
 }
 
-export default Header;
+export default withRouter(Header);
