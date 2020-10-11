@@ -4,14 +4,35 @@ import Header from "../components/Header";
 import styles from "../stylesheets/style.module.css";
 import { products } from "../data/prodcuts";
 import QuantityControl from "../components/QuantityControl";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../actions/cartActions";
+import { withRouter } from "react-router";
 
-function ProductPage({ match }) {
+function ProductPage(props) {
 	const [productId, setproductId] = useState("");
 	const [productDetails, setProductDetails] = useState({});
+
+	const cartState = useSelector((state) => state.cart);
+
+	const dispatch = useDispatch();
+	const buyNow = () => {
+		if (
+			cartState.itemCodes === [] ||
+			cartState.itemCodes.indexOf(productId) == -1
+		) {
+			dispatch(addItem(productId, 1));
+		}
+
+		props.history.push(`/cart`);
+	};
+
 	useEffect(() => {
 		function getProductId() {
-			if (match.params.id !== undefined && match.params.id !== "") {
-				setproductId(match.params.id);
+			if (
+				props.match.params.id !== undefined &&
+				props.match.params.id !== ""
+			) {
+				setproductId(props.match.params.id);
 			}
 		}
 
@@ -29,7 +50,7 @@ function ProductPage({ match }) {
 		}
 		getProductId();
 		getProductDetails();
-	}, [match, productId]);
+	}, [props.match, productId]);
 
 	if (productDetails !== undefined && productDetails !== {}) {
 		return (
@@ -134,9 +155,10 @@ function ProductPage({ match }) {
 							</h4>
 						</div>
 						<div className={`uk-flex uk-margin-small`}>
-							<QuantityControl id={productDetails.id} />
+							<QuantityControl id={productId} />
 							<button
 								className={`uk-button uk-button-primary uk-margin-small-left uk-border-rounded`}
+								onClick={() => buyNow()}
 							>
 								{" "}
 								Buy Now
@@ -162,4 +184,4 @@ function ProductPage({ match }) {
 	}
 }
 
-export default ProductPage;
+export default withRouter(ProductPage);
