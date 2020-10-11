@@ -2,15 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import { addItem } from "../actions/cartActions";
-import { useSelector, useDispatch } from "react-redux";
 import { searchTypes } from "../data/enums/searchType";
 import styles from "../stylesheets/style.module.css";
 
 function Header(props) {
-	const cartCounter = useSelector((state) => state.cart.numberOfItems);
-	const stateConst = useSelector((state) => state);
-	console.log(stateConst);
-	const dispatch = useDispatch();
 	const searchType = searchTypes.ITEM;
 	const [searchValue, setSearchValue] = useState("");
 
@@ -85,16 +80,9 @@ function Header(props) {
 									data-uk-icon="icon: cart"
 									className={`${styles.textColorWhite}`}
 								></a>
-								{cartCounter}
 							</Link>
 						</li>
 						<li className={`uk-visible@m`}>
-							<button
-								className={`uk-button`}
-								onClick={() => dispatch(addItem("yo yo", 1))}
-							>
-								+
-							</button>
 							<a
 								href="#"
 								data-uk-icon="icon: info"
