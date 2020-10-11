@@ -1,61 +1,103 @@
 /* Generic */
 :root {
-    --primary: #1e87f0;
-    --white: #ffffff;
-    --black: #000000;
-    --greyDark: #9baacf;
+	--primary: #1e87f0;
+	--white: #ffffff;
+	--black: #000000;
+	--greyDark: #9baacf;
 }
 
 .textColorWhite {
-    color: var(--white) !important;
+	color: var(--white) !important;
 }
 
 .textColorBlack {
-    color: var(--black) !important;
+	color: var(--black) !important;
 }
 
 .backgroundPrimary {
-    background-color: var(--primary) !important;
+	background-color: var(--primary) !important;
 }
 
 /* Footer */
 .FooterLink {
-    min-height: 30px !important;
+	min-height: 30px !important;
 }
 
 /* Cart */
 
 .quantityControlBorder {
-    border-style: solid;
-    border-width: thin;
-    padding: 2px 5px;
-    border-radius: 5px;
+	border-style: solid;
+	border-width: thin;
+	padding: 2px 5px;
+	border-radius: 5px;
 }
 
 .quantityControlList {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0;
-    list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+	list-style: none;
 }
 
 .quantityControl_SmallDevice {
-    right: 0 !important;
-    position: absolute !important;
-    max-width: 100%;
+	right: 0 !important;
+	position: absolute !important;
+	max-width: 100%;
 }
 
 .removeItem_SmallDevice {
-    top: unset !important;
+	top: unset !important;
 }
 
 .TotalPrice_SmallDevice {
-    z-index: 1500;
+	z-index: 1500;
 }
 
 .ProductImg {
-    margin-top: 5px;
+	margin-top: 5px;
 }
 .ProductDesc {
-    padding: 2rem 3rem !important;
+	padding: 2rem 3rem !important;
+}
+
+/* Quantity Control */
+.quantityControl {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: fit-content;
+	margin: 0 auto;
+	background: #eaeaea;
+	border-radius: 10px;
+	padding: 1rem 0.4rem;
+	margin-top: 4rem;
+}
+
+.quantityBtn {
+	background: transparent;
+	border: none;
+	outline: none;
+	margin: 0;
+	padding: 0px 8px;
+	cursor: pointer;
+}
+.quantityBtn svg {
+	width: 15px;
+	height: 15px;
+}
+.quantityInput {
+	outline: none;
+	user-select: none;
+	text-align: center;
+	width: 47px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: none;
+}
+.quantityInput::-webkit-inner-spin-button,
+.quantityInput::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
