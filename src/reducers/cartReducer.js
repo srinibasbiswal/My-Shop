@@ -75,8 +75,14 @@ const cartReducer = (state = initialCartState, action) => {
 			} else {
 				return state;
 			}
-		case actionTypes.EMPTY_CART:
-			return state;
+		case actionTypes.RESET_CART:
+			const defaultState = initialCartState;
+			return {
+				...state,
+				numberOfItems: defaultState.numberOfItems,
+				itemCodes: defaultState.itemCodes,
+				itemMap: defaultState.itemMap,
+			};
 		default:
 			return state;
 	}
