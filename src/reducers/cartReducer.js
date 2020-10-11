@@ -24,10 +24,12 @@ const cartReducer = (state = initialCartState, action) => {
 				} else {
 					// If Item is not present in the cart
 					itemQtyMap[action.itemCode] = action.quantity;
+					var itemCodesList = state.itemCodes;
+					itemCodesList.push(action.itemCode);
 					return {
 						...state,
 						numberOfItems: state.numberOfItems + action.quantity,
-						itemCodes: state.itemCodes.push(action.itemCode),
+						itemCodes: itemCodesList,
 						itemMap: itemQtyMap,
 					};
 				}

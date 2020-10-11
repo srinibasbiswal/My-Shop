@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../stylesheets/style.module.css";
 import { Link } from "react-router-dom";
+import QuantityControl from "./QuantityControl";
 
 /*
 @Parameters
@@ -12,7 +13,6 @@ import { Link } from "react-router-dom";
 */
 
 function ProductCard(props) {
-	console.log(props);
 	if (props !== undefined) {
 		return (
 			<div className={`uk-card uk-card-default uk-border-rounded`}>
@@ -34,13 +34,15 @@ function ProductCard(props) {
 						<br />
 						<strong>&#x20B9; {props.price}</strong>
 					</p>
-					<div>
+					<QuantityControl id={props.id} />
+					<div className={` uk-margin-small-top`}></div>
+					{/* <div>
 						<button
 							className={`uk-button uk-button-primary ${styles.textColorWhite} ${styles.backgroundPrimary} uk-border-rounded uk-width-1-1 uk-padding-remove`}
 						>
 							Add to cart
 						</button>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		);
