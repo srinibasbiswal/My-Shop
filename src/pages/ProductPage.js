@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import slider1 from "../assets/images/img1.jpg";
-import slider2 from "../assets/images/img2.jpg";
-import slider3 from "../assets/images/img3.jpg";
 import styles from "../stylesheets/style.module.css";
 import { products } from "../data/prodcuts";
+import QuantityControl from "../components/QuantityControl";
 
 function ProductPage({ match }) {
 	const [productId, setproductId] = useState("");
@@ -132,38 +130,16 @@ function ProductPage({ match }) {
 						</p>
 						<div className={`uk-flex `}>
 							<h4 className={`uk-margin-remove-bottom`}>
-								Quantity ({productDetails.weightUOM}) :{" "}
+								Unit of Measurement : {productDetails.weightUOM}
 							</h4>
-							<ul className={`${styles.quantityControlList}`}>
-								<li className={styles.quantityControlBorder}>
-									<a href="#" uk-icon="icon: minus"></a>
-								</li>
-								<li
-									className={`uk-margin-small-right uk-margin-small-left`}
-								>
-									<p
-										className={`uk-margin-remove uk-text-bold`}
-									>
-										1
-									</p>
-								</li>
-								<li className={styles.quantityControlBorder}>
-									<a href="#" uk-icon="icon: plus"></a>
-								</li>
-							</ul>
 						</div>
 						<div className={`uk-flex uk-margin-small`}>
-							<button
-								className={`uk-button uk-button-primary uk-margin-small-right uk-border-rounded`}
-							>
-								{" "}
-								Buy Now
-							</button>
+							<QuantityControl id={productDetails.id} />
 							<button
 								className={`uk-button uk-button-primary uk-margin-small-left uk-border-rounded`}
 							>
 								{" "}
-								Add to cart
+								Buy Now
 							</button>
 						</div>
 						<p>Some description of the product</p>
