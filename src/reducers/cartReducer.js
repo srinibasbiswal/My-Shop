@@ -13,16 +13,16 @@ const cartReducer = (state = initialCartState, action) => {
 				// If cart is not empty
 				var itemQtyMap = state.itemMap;
 				if (state.itemCodes.indexOf(action.itemCode) !== -1) {
-					// If item is not present in the cart
+					// If item is present in the cart
 					itemQtyMap[action.itemCode] =
-						state.itemMap[action.itemCode] + 1;
+						state.itemMap[action.itemCode] + action.quantity;
 					return {
 						...state,
 						numberOfItems: state.numberOfItems + action.quantity,
 						itemMap: itemQtyMap,
 					};
 				} else {
-					// If Item is present in the cart
+					// If Item is not present in the cart
 					itemQtyMap[action.itemCode] = action.quantity;
 					return {
 						...state,
@@ -38,8 +38,6 @@ const cartReducer = (state = initialCartState, action) => {
 				var itemCodesList = [];
 				itemCodesList.push(action.itemCode);
 				itemQtyMap[action.itemCode] = action.quantity;
-				console.log(itemCodesList);
-				console.log(action.itemCode);
 				return {
 					...state,
 					numberOfItems: state.numberOfItems + action.quantity,
@@ -49,7 +47,34 @@ const cartReducer = (state = initialCartState, action) => {
 			}
 
 		case actionTypes.REMOVE_ITEM:
-			return state;
+			if (state.numberOfItems !== 0) {
+				// If cart is not empty
+				if (state.itemCodes.indexOf(action.itemCode) !== -1) {
+					// If item is present in the cart
+					var itemQtyMap = state.itemMap;
+					var itemCodesList = state.itemCodes;
+					itemQtyMap[action.itemCode] =
+						itemQtyMap[action.itemCode] - action.quantity;
+					if (itemQtyMap[action.itemCode] <= 0) {
+						const index = itemCodesList.indexOf(action.itemCode);
+						if (index > -1) {
+							itemCodesList.splice(index, 1);
+						}
+						delete itemQtyMap[action.itemCode];
+					}
+					return {
+						...state,
+						numberOfItems: state.numberOfItems - action.quantity,
+						itemCodes: itemCodesList,
+						itemMap: itemQtyMap,
+					};
+				} else {
+					// If Item is not present in the cart
+					return state;
+				}
+			} else {
+				return state;
+			}
 		case actionTypes.EMPTY_CART:
 			return state;
 		default:
