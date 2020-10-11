@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import { addItem } from "../actions/cartActions";
 import { searchTypes } from "../data/enums/searchType";
 import styles from "../stylesheets/style.module.css";
 
