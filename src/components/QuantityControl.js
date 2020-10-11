@@ -5,6 +5,7 @@ import { addItem, removeItem } from "../actions/cartActions";
 
 function QuantityControl(props) {
 	const dispatch = useDispatch();
+
 	const increaseQuantity = (itemId, quantity) => {
 		dispatch(addItem(itemId, quantity));
 	};
