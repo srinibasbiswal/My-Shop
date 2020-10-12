@@ -7,7 +7,7 @@ function CartProductList() {
 	const dispatch = useDispatch();
 	const cartState = useSelector((state) => state.cart);
 
-	const [productDetailsMap, setProductDetailsMap] = useState({});
+	const [productDetailsMap, setProductDetailsMap] = useState(null);
 
 	useEffect(() => {
 		function getProductDetailsMap() {
@@ -22,30 +22,66 @@ function CartProductList() {
 						itemDetailMap[item.id] = item;
 					}
 				});
+				console.log(itemDetailMap);
 				setProductDetailsMap(itemDetailMap);
 			}
 		}
 		getProductDetailsMap();
-	}, [cartState.itemCodes]);
+	}, []);
 
-	return (
-		<div>
-			<hr />
-			<CartProduct />
-			<hr />
-			<CartProduct />
-			<hr />
-			<CartProduct />
-			<hr />
-			<CartProduct />
-			<hr />
-			<CartProduct />
-			<hr />
-			<CartProduct />
-			<hr />
-			<CartProduct />
-		</div>
-	);
+	{
+		console.log(productDetailsMap);
+	}
+
+	if (
+		cartState !== undefined &&
+		cartState.itemCodes !== undefined &&
+		cartState.itemCodes !== [] &&
+		cartState.itemCodes.length > 0 &&
+		productDetailsMap !== undefined &&
+		productDetailsMap !== null
+	) {
+		return (
+			<div>
+				{cartState.itemCodes.map((id, index) => {
+					return (
+						<React.Fragment>
+							<CartProduct
+								id={id}
+								productName={productDetailsMap[id][`name`]}
+								price={productDetailsMap[id][`price`]}
+								primaryImageCode={
+									productDetailsMap[id][`primaryImageCode`]
+								}
+							/>
+							<hr />
+						</React.Fragment>
+					);
+				})}
+			</div>
+		);
+	} else {
+		return <div>Cart is empty</div>;
+	}
+
+	// return (
+	// 	<div>
+	// 		<hr />
+	// 		<CartProduct />
+	// 		<hr />
+	// 		<CartProduct />
+	// 		<hr />
+	// 		<CartProduct />
+	// 		<hr />
+	// 		<CartProduct />
+	// 		<hr />
+	// 		<CartProduct />
+	// 		<hr />
+	// 		<CartProduct />
+	// 		<hr />
+	// 		<CartProduct />
+	// 	</div>
+	// );
 }
 
 export default CartProductList;
