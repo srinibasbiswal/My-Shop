@@ -16,8 +16,8 @@ const amountReducer = (state = initialAmountState, action) => {
 	switch (action.type) {
 		case actionTypes.CALCULATE_AMOUNT:
 			console.log(action);
-			if (action.cart !== undefined) {
-				if (action.cart.numberOfItems === 0) {
+			if (action.cart.cart !== undefined) {
+				if (action.cart.cart.numberOfItems === 0) {
 					const defaultState = initialAmountState;
 					return {
 						...state,
@@ -34,14 +34,14 @@ const amountReducer = (state = initialAmountState, action) => {
 					};
 				} else {
 					var newAmountObj = initialAmountState;
-					action.cart.itemCodes.map((itemCode, index) => {
+					action.cart.cart.itemCodes.map((itemCode, index) => {
 						var itemObj = products.filter(function (entry) {
 							return entry.id === itemCode;
 						})[0];
 						newAmountObj.itemsAmount =
-							state.itemsAmount + itemObj.price;
+							newAmountObj.itemsAmount + itemObj.price;
 						newAmountObj.totalWeight =
-							state.totalWeight + itemObj.weight;
+							newAmountObj.totalWeight + itemObj.weight;
 						newAmountObj.packagingCharges =
 							(newAmountObj.totalWeight / 15) * 5;
 						newAmountObj.deliveryCharges =

@@ -1,4 +1,6 @@
 import { actionTypes } from "../data/enums/actionTypes";
+import { calculateAmount } from "./amountActions";
+import store from "../store";
 
 export const addItem = (itemId, quantity) => {
 	return {
@@ -19,5 +21,12 @@ export const removeItem = (itemId, quantity) => {
 export const resetCart = () => {
 	return {
 		type: actionTypes.RESET_CART,
+	};
+};
+
+export const addAndCalculateItem = (itemId, quantity) => {
+	return function (dispatch) {
+		dispatch(addItem(itemId, quantity));
+		dispatch(calculateAmount(store.getState()));
 	};
 };
