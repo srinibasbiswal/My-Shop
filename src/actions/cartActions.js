@@ -30,3 +30,10 @@ export const addAndCalculateItem = (itemId, quantity) => {
 		dispatch(calculateAmount(store.getState()));
 	};
 };
+
+export const removeAndCalculateItem = (itemId, quantity) => {
+	return function (dispatch) {
+		dispatch(removeItem(itemId, quantity));
+		dispatch(calculateAmount(store.getState()));
+	};
+};

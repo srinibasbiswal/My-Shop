@@ -1,20 +1,23 @@
 import React from "react";
 import styles from "../stylesheets/style.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, removeItem } from "../actions/cartActions";
+import {
+	addAndCalculateItem,
+	removeAndCalculateItem,
+} from "../actions/cartActions";
 
 function QuantityControl(props) {
+	const cartState = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 
 	const increaseQuantity = (itemId, quantity) => {
-		dispatch(addItem(itemId, quantity));
+		dispatch(addAndCalculateItem(itemId, quantity));
 	};
 	const decreaseQuantity = (itemId, quantity) => {
-		dispatch(removeItem(itemId, quantity));
+		dispatch(removeAndCalculateItem(itemId, quantity));
 	};
-	const changeQuantity = (itemId, quantity) => {};
 
-	const cartState = useSelector((state) => state.cart);
+	const changeQuantity = (itemId, quantity) => {};
 
 	return (
 		<React.Fragment>

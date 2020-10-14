@@ -3,7 +3,7 @@ import styles from "../stylesheets/style.module.css";
 import { Link } from "react-router-dom";
 import QuantityControl from "./QuantityControl";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../actions/cartActions";
+import { addAndCalculateItem } from "../actions/cartActions";
 
 /*
 @Parameters
@@ -18,7 +18,7 @@ function ProductCard(props) {
 	const dispatch = useDispatch();
 
 	const increaseQuantity = (itemId, quantity) => {
-		dispatch(addItem(itemId, quantity));
+		dispatch(addAndCalculateItem(itemId, quantity));
 	};
 
 	const cartState = useSelector((state) => state.cart);
