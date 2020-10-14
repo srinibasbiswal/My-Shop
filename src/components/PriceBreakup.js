@@ -19,11 +19,69 @@ function PriceBreakup() {
 								</tr>
 								<tr>
 									<td>Delivery Charges</td>
-									<td>&#x20B9; {amount.deliveryCharges}</td>
+									<td>
+										{(() => {
+											if (
+												amount.overRideDeliveryCharges !==
+													undefined &&
+												amount.overRideDeliveryCharges ===
+													true
+											) {
+												return (
+													<React.Fragment>
+														&#x20B9;
+														<s>
+															{
+																amount.deliveryCharges
+															}
+														</s>
+														&nbsp; &#x20B9; 50
+													</React.Fragment>
+												);
+											} else {
+												return (
+													<React.Fragment>
+														&#x20B9;
+														{amount.deliveryCharges}
+													</React.Fragment>
+												);
+											}
+										})()}
+									</td>
 								</tr>
 								<tr>
 									<td>Baggage Charges</td>
-									<td>&#x20B9; {amount.packagingCharges}</td>
+									<td>
+										{(() => {
+											if (
+												amount.overRidePackagingCharges !==
+													undefined &&
+												amount.overRidePackagingCharges ===
+													true
+											) {
+												return (
+													<React.Fragment>
+														&#x20B9;
+														<s>
+															{
+																amount.packagingCharges
+															}
+														</s>
+														&nbsp; &#x20B9; 0
+													</React.Fragment>
+												);
+											} else {
+												return (
+													<React.Fragment>
+														&#x20B9;
+														{
+															amount.packagingCharges
+														}
+													</React.Fragment>
+												);
+											}
+										})()}
+									</td>
 								</tr>
 								<hr />
 								<tr>
