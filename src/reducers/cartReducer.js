@@ -1,10 +1,7 @@
 import { actionTypes } from "../data/enums/actionTypes";
+import CartStateDocument from "../documents/CartStateDocument";
 
-const initialCartState = {
-	numberOfItems: 0,
-	itemCodes: [],
-	itemMap: {},
-};
+const initialCartState = new CartStateDocument();
 
 const cartReducer = (state = initialCartState, action) => {
 	switch (action.type) {
@@ -78,7 +75,7 @@ const cartReducer = (state = initialCartState, action) => {
 				return state;
 			}
 		case actionTypes.RESET_CART:
-			const defaultState = initialCartState;
+			const defaultState = new CartStateDocument();
 			return {
 				...state,
 				numberOfItems: defaultState.numberOfItems,

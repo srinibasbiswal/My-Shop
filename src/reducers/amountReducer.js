@@ -77,6 +77,20 @@ const amountReducer = (state = initialAmountState, action) => {
 			}
 			return state;
 
+		case actionTypes.RESET_AMOUNT:
+			var newAmountObj = new AmountStateDocument();
+			return {
+				...state,
+				itemsAmount: Math.floor(newAmountObj.itemsAmount),
+				totalAmount: Math.floor(newAmountObj.totalAmount),
+				packagingCharges: Math.floor(newAmountObj.packagingCharges),
+				deliveryCharges: Math.floor(newAmountObj.deliveryCharges),
+				totalWeight: newAmountObj.totalWeight,
+				overRideDeliveryCharges: newAmountObj.overRideDeliveryCharges,
+				overRidePackagingCharges: newAmountObj.overRidePackagingCharges,
+				isMinimumPrice: newAmountObj.isMinimumPrice,
+			};
+
 		default:
 			return state;
 	}
