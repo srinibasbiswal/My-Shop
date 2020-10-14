@@ -1,24 +1,16 @@
 import { actionTypes } from "../data/enums/actionTypes";
 import { products } from "../data/prodcuts";
+import AmountStateDocument from "../documents/AmountStateDocument";
 
-const initialAmountState = {
-	itemsAmount: 0,
-	totalAmount: 0,
-	packagingCharges: 0,
-	deliveryCharges: 0,
-	totalWeight: 0,
-	overRideDeliveryCharges: false,
-	overRidePackagingCharges: false,
-	isMinimumPrice: false,
-};
+const initialAmountState = new AmountStateDocument();
 
 const amountReducer = (state = initialAmountState, action) => {
 	switch (action.type) {
 		case actionTypes.CALCULATE_AMOUNT:
 			console.log(action);
-			if (action.cart.cart !== undefined) {
-				if (action.cart.cart.numberOfItems === 0) {
-					const defaultState = initialAmountState;
+			if (action.cart !== undefined) {
+				if (action.cart.numberOfItems === 0) {
+					const defaultState = new AmountStateDocument();
 					return {
 						...state,
 						itemsAmount: defaultState.itemsAmount,
@@ -33,15 +25,17 @@ const amountReducer = (state = initialAmountState, action) => {
 						isMinimumPrice: defaultState.isMinimumPrice,
 					};
 				} else {
-					var newAmountObj = initialAmountState;
-					action.cart.cart.itemCodes.map((itemCode, index) => {
+					var newAmountObj = new AmountStateDocument();
+					action.cart.itemCodes.map((itemCode, index) => {
 						var itemObj = products.filter(function (entry) {
 							return entry.id === itemCode;
 						})[0];
 						newAmountObj.itemsAmount =
-							newAmountObj.itemsAmount + itemObj.price;
+							newAmountObj.itemsAmount +
+							itemObj.price * action.cart.itemMap[itemCode];
 						newAmountObj.totalWeight =
-							newAmountObj.totalWeight + itemObj.weight;
+							newAmountObj.totalWeight +
+							itemObj.weight * action.cart.itemMap[itemCode];
 						newAmountObj.packagingCharges =
 							(newAmountObj.totalWeight / 15) * 5;
 						newAmountObj.deliveryCharges =
@@ -64,10 +58,14 @@ const amountReducer = (state = initialAmountState, action) => {
 
 					return {
 						...state,
-						itemsAmount: newAmountObj.itemsAmount,
-						totalAmount: newAmountObj.totalAmount,
-						packagingCharges: newAmountObj.packagingCharges,
-						deliveryCharges: newAmountObj.deliveryCharges,
+						itemsAmount: Math.floor(newAmountObj.itemsAmount),
+						totalAmount: Math.floor(newAmountObj.totalAmount),
+						packagingCharges: Math.floor(
+							newAmountObj.packagingCharges
+						),
+						deliveryCharges: Math.floor(
+							newAmountObj.deliveryCharges
+						),
 						totalWeight: newAmountObj.totalWeight,
 						overRideDeliveryCharges:
 							newAmountObj.overRideDeliveryCharges,
