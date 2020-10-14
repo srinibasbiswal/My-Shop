@@ -40,7 +40,7 @@ const amountReducer = (state = initialAmountState, action) => {
 							(newAmountObj.totalWeight / 15) * 5;
 						newAmountObj.deliveryCharges =
 							(newAmountObj.itemsAmount / 100) * 10;
-						if (newAmountObj.itemsAmount > 600) {
+						if (newAmountObj.itemsAmount >= 600) {
 							newAmountObj.overRideDeliveryCharges = true;
 							newAmountObj.overRidePackagingCharges = true;
 						}
