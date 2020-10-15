@@ -2,6 +2,9 @@ import React from "react";
 import slider1 from "../assets/images/img1.jpg";
 import styles from "../stylesheets/style.module.css";
 import QuantityControl from "./QuantityControl";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteItemFromCart } from "../actions/cartActions";
 
 /*
 @Parameters
@@ -13,6 +16,12 @@ import QuantityControl from "./QuantityControl";
 */
 
 function CartProduct(props) {
+	const dispatch = useDispatch();
+
+	const deleteItem = (itemId) => {
+		dispatch(deleteItemFromCart(itemId));
+	};
+
 	return (
 		<div>
 			<table className={`uk-table uk-visible@m`}>
@@ -24,6 +33,7 @@ function CartProduct(props) {
 									type="button"
 									data-uk-icon="icon: close"
 									className={`uk-margin-medium-right`}
+									onClick={() => deleteItem(props.id)}
 								></button>
 								<img
 									src={props.primaryImageCode}
@@ -36,9 +46,11 @@ function CartProduct(props) {
 						<td>
 							<div className={`uk-card-body`}>
 								<div>
-									<p className={`uk-text-lead`}>
-										{props.productName}
-									</p>
+									<Link to={`/product/${props.id}`}>
+										<p className={`uk-text-lead`}>
+											{props.productName}
+										</p>
+									</Link>
 								</div>
 								<div>
 									<p>Some Description</p>
@@ -49,39 +61,6 @@ function CartProduct(props) {
 						<td>
 							<div className={`uk-card-body`}>
 								<div>
-									{/* <ul
-                                        className={`${styles.quantityControlList}`}
-                                    >
-                                        <li
-                                            className={
-                                                styles.quantityControlBorder
-                                            }
-                                        >
-                                            <a
-                                                href="#"
-                                                uk-icon="icon: minus"
-                                            ></a>
-                                        </li>
-                                        <li
-                                            className={`uk-margin-small-right uk-margin-small-left`}
-                                        >
-                                            <p
-                                                className={`uk-margin-remove uk-text-bold`}
-                                            >
-                                                1
-                                            </p>
-                                        </li>
-                                        <li
-                                            className={
-                                                styles.quantityControlBorder
-                                            }
-                                        >
-                                            <a
-                                                href="#"
-                                                uk-icon="icon: plus"
-                                            ></a>
-                                        </li>
-                                    </ul> */}
 									<QuantityControl id={props.id} />
 								</div>
 								<div className={`uk-margin-medium-top`}>

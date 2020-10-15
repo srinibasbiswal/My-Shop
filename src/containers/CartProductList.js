@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import CartProduct from "../components/CartProduct";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { products } from "../data/prodcuts";
 
 function CartProductList() {
-	const dispatch = useDispatch();
 	const cartState = useSelector((state) => state.cart);
 
 	const [productDetailsMap, setProductDetailsMap] = useState(null);
@@ -28,10 +27,6 @@ function CartProductList() {
 		}
 		getProductDetailsMap();
 	}, []);
-
-	{
-		console.log(productDetailsMap);
-	}
 
 	if (
 		cartState !== undefined &&
@@ -63,25 +58,6 @@ function CartProductList() {
 	} else {
 		return <div>Cart is empty</div>;
 	}
-
-	// return (
-	// 	<div>
-	// 		<hr />
-	// 		<CartProduct />
-	// 		<hr />
-	// 		<CartProduct />
-	// 		<hr />
-	// 		<CartProduct />
-	// 		<hr />
-	// 		<CartProduct />
-	// 		<hr />
-	// 		<CartProduct />
-	// 		<hr />
-	// 		<CartProduct />
-	// 		<hr />
-	// 		<CartProduct />
-	// 	</div>
-	// );
 }
 
 export default CartProductList;
