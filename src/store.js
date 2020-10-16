@@ -1,13 +1,15 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
 import amountReducer from "./reducers/amountReducer";
 import cartReducer from "./reducers/cartReducer";
 import addressReducer from "./reducers/addressReducer";
-import thunk from "redux-thunk";
+import purchaseOrderReducer from "./reducers/purchaseOrderReducer";
 
 const rootReducer = combineReducers({
 	cart: cartReducer,
 	amount: amountReducer,
 	address: addressReducer,
+	purchaseOrder: purchaseOrderReducer,
 });
 
 const composeEnhancers =
