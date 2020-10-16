@@ -9,6 +9,10 @@ const addressReducer = (state = initialAddressState, action) => {
 			if (action.address !== undefined) {
 				return {
 					...state,
+					name:
+						action.address.name !== undefined
+							? action.address.name
+							: "",
 					addr1:
 						action.address.addr1 !== undefined
 							? action.address.addr1

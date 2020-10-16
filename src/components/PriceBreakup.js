@@ -3,12 +3,19 @@ import styles from "../stylesheets/style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import { createPurchaseOrder } from "../actions/purchaseOrderActions";
 
 function PriceBreakup(props) {
 	const amount = useSelector((state) => state.amount);
+	const dispatch = useDispatch();
 
 	const movetoAddAddress = () => {
-		props.history.push(`/checkout`);
+		if (window.location.pathname === "/checkout") {
+			console.log("yes yaba");
+			dispatch(createPurchaseOrder());
+		} else {
+			props.history.push(`/checkout`);
+		}
 	};
 
 	return (
