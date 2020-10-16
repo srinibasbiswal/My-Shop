@@ -1,9 +1,15 @@
 import React from "react";
 import styles from "../stylesheets/style.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
-function PriceBreakup() {
+function PriceBreakup(props) {
 	const amount = useSelector((state) => state.amount);
+
+	const movetoAddAddress = () => {
+		props.history.push(`/checkout`);
+	};
 
 	return (
 		<React.Fragment>
@@ -92,6 +98,7 @@ function PriceBreakup() {
 						</table>
 						<button
 							className={`uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom`}
+							onClick={() => movetoAddAddress()}
 						>
 							Place Order
 						</button>
@@ -177,4 +184,4 @@ function PriceBreakup() {
 	);
 }
 
-export default PriceBreakup;
+export default withRouter(PriceBreakup);
