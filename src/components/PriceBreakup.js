@@ -1,9 +1,8 @@
 import React from "react";
 import styles from "../stylesheets/style.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import { createPurchaseOrder } from "../actions/purchaseOrderActions";
+import { generatePO } from "../actions/purchaseOrderActions";
 
 function PriceBreakup(props) {
 	const amount = useSelector((state) => state.amount);
@@ -11,8 +10,7 @@ function PriceBreakup(props) {
 
 	const movetoAddAddress = () => {
 		if (window.location.pathname === "/checkout") {
-			console.log("yes yaba");
-			dispatch(createPurchaseOrder());
+			dispatch(generatePO());
 		} else {
 			props.history.push(`/checkout`);
 		}

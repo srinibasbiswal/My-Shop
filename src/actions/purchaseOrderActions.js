@@ -1,5 +1,7 @@
 import { actionTypes } from "../data/enums/actionTypes";
 import store from "../store";
+import { resetAmount } from "./amountActions";
+import { resetCart } from "./cartActions";
 
 export const createPurchaseOrder = () => {
 	if (
@@ -16,4 +18,12 @@ export const createPurchaseOrder = () => {
 	} else {
 		return store.getState();
 	}
+};
+
+export const generatePO = () => {
+	return function (dispatch) {
+		dispatch(createPurchaseOrder());
+		dispatch(resetCart());
+		dispatch(resetAmount());
+	};
 };
