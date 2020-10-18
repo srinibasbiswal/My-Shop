@@ -7,18 +7,52 @@ function SignupForm() {
 		initialValues: {
 			email: "",
 			password: "",
+			rememberMe: false,
 		},
 		onSubmit: (values) => {
-			console.log(values);
-			firebase
-				.auth()
-				.createUserWithEmailAndPassword(values.email, values.password)
-				.catch(function (error) {
-					// Handle Errors here.
-					var errorCode = error.code;
-					var errorMessage = error.message;
-					// ...
-				});
+			if (values.rememberMe) {
+				firebase
+					.auth()
+					.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+					.then(function () {
+						return firebase
+							.auth()
+							.createUserWithEmailAndPassword(
+								values.email,
+								values.password
+							)
+							.catch(function (error) {
+								var errorCode = error.code;
+								var errorMessage = error.message;
+								alert(errorMessage);
+							});
+					})
+					.catch(function (error) {
+						var errorCode = error.code;
+						var errorMessage = error.message;
+					});
+			} else {
+				firebase
+					.auth()
+					.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+					.then(function () {
+						return firebase
+							.auth()
+							.createUserWithEmailAndPassword(
+								values.email,
+								values.password
+							)
+							.catch(function (error) {
+								var errorCode = error.code;
+								var errorMessage = error.message;
+								alert(errorMessage);
+							});
+					})
+					.catch(function (error) {
+						var errorCode = error.code;
+						var errorMessage = error.message;
+					});
+			}
 		},
 	});
 
@@ -64,6 +98,19 @@ function SignupForm() {
 							onChange={formik.handleChange}
 							value={formik.values.password}
 						/>
+					</div>
+					<div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+						<label>
+							<input
+								class="uk-checkbox"
+								type="checkbox"
+								id="rememberMe"
+								name="rememberMe"
+								onChange={formik.handleChange}
+								value={false}
+							/>{" "}
+							Remember Me
+						</label>
 					</div>
 					<div className={`uk-margin uk-width-1-1 uk-text-center`}>
 						<button
