@@ -4,12 +4,14 @@ import amountReducer from "./reducers/amountReducer";
 import cartReducer from "./reducers/cartReducer";
 import addressReducer from "./reducers/addressReducer";
 import purchaseOrderReducer from "./reducers/purchaseOrderReducer";
+import authReducer from "./reducers/authReducer";
 
 const rootReducer = combineReducers({
 	cart: cartReducer,
 	amount: amountReducer,
 	address: addressReducer,
 	purchaseOrder: purchaseOrderReducer,
+	authReducer: authReducer,
 });
 
 const composeEnhancers =

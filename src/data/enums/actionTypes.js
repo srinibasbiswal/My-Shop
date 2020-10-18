@@ -8,4 +8,6 @@ export const actionTypes = {
 	DELETE_ADDRESS: "Delete Address",
 	SELECT_ADDRESS: "Select Address",
 	CREATE_PO: "Create Purchase Order",
+	LOGIN: "Log In",
+	SIGNUP: "Sign Up",
 };
