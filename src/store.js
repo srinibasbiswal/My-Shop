@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
 	amount: amountReducer,
 	address: addressReducer,
 	purchaseOrder: purchaseOrderReducer,
-	authReducer: authReducer,
+	authentication: authReducer,
 });
 
 const composeEnhancers =

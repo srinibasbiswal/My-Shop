@@ -1,5 +1,7 @@
 import { actionTypes } from "../data/enums/actionTypes";
+import { authTypes } from "../data/enums/authTypes";
 import AuthStateDocument from "../documents/AuthStateDocument";
+import firebase from "../firebaseConfig";
 
 const initialAuthState = new AuthStateDocument();
 
@@ -30,7 +32,57 @@ const authReducer = (state = initialAuthState, action) => {
 			};
 
 		case actionTypes.SIGNUP:
-			break;
+			var signupAuthState = new AuthStateDocument();
+			if (
+				action.authType !== undefined &&
+				action.authType === authTypes.EMAIL
+			) {
+				if (
+					action.email !== undefined &&
+					action.password !== undefined &&
+					action.email !== "" &&
+					action.password !== ""
+				) {
+					firebase
+						.auth()
+						.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+						.then(function () {
+							return (
+								firebase
+									.auth()
+									.createUserWithEmailAndPassword(
+										action.email,
+										action.password
+									)
+									// .then((signupAuthState.userName = action.email))
+									.catch(function (error) {
+										var errorMessage = error.message;
+										signupAuthState.isSignUpError = true;
+										signupAuthState.errorMessage = errorMessage;
+									})
+							);
+						})
+						.catch(function (error) {
+							var errorMessage = error.message;
+							signupAuthState.isSignUpError = true;
+							signupAuthState.errorMessage = errorMessage;
+						});
+				} else {
+					signupAuthState.isSignUpError = true;
+					signupAuthState.errorMessage =
+						"Please enter both email and password.";
+				}
+			}
+			return {
+				...state,
+				isLoggedIn: signupAuthState.isLoggedIn,
+				isVerified: signupAuthState.isVerified,
+				userName: signupAuthState.userName,
+				isSignUpError: signupAuthState.isSignUpError,
+				isLogInError: signupAuthState.isLogInError,
+				errorMessage: signupAuthState.errorMessage,
+				comments: signupAuthState.comments,
+			};
 
 		default:
 			return state;
