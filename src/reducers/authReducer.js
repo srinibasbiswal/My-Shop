@@ -30,8 +30,10 @@ const authReducer = (state = initialAuthState, action) => {
 				comments: loginAuthState.comments,
 			};
 
-		case authResponses.SIGN_UP_ERROR:
 		case authResponses.SIGN_UP_SUCCESS:
+		case authResponses.SIGN_UP_ERROR:
+		case authResponses.LOG_IN_SUCCESS:
+		case authResponses.LOG_IN_ERROR:
 			return {
 				...state,
 				isLoggedIn: action.authState.isLoggedIn,
