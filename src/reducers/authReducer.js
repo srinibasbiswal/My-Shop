@@ -1,8 +1,6 @@
-import { setAuthState } from "../actions/authActions";
 import { actionTypes } from "../data/enums/actionTypes";
-import { authTypes } from "../data/enums/authTypes";
+import { authResponses } from "../data/enums/authResponses";
 import AuthStateDocument from "../documents/AuthStateDocument";
-import firebase from "../firebaseConfig";
 
 const initialAuthState = new AuthStateDocument();
 
@@ -32,7 +30,8 @@ const authReducer = (state = initialAuthState, action) => {
 				comments: loginAuthState.comments,
 			};
 
-		case actionTypes.SIGNUP_ERROR:
+		case authResponses.SIGN_UP_ERROR:
+		case authResponses.SIGN_UP_SUCCESS:
 			return {
 				...state,
 				isLoggedIn: action.authState.isLoggedIn,
@@ -44,81 +43,7 @@ const authReducer = (state = initialAuthState, action) => {
 				comments: action.authState.comments,
 			};
 
-		case actionTypes.SIGNUP:
-			var signupAuthState = new AuthStateDocument();
-			if (
-				action.authType !== undefined &&
-				action.authType === authTypes.EMAIL
-			) {
-				if (
-					action.email !== undefined &&
-					action.password !== undefined &&
-					action.email !== "" &&
-					action.password !== ""
-				) {
-					// signupAuthState = createUser(
-					// 	signupAuthState,
-					// 	action.email,
-					// 	action.password
-					// );
-
-					firebase
-						.auth()
-						.setPersistence(firebase.auth.Auth.Persistence.SESSION)
-						.then(function () {
-							return firebase
-								.auth()
-								.createUserWithEmailAndPassword(
-									action.email,
-									action.password
-								)
-								.then((user) => {
-									console.log(user);
-								})
-								.catch(function (error) {
-									var errorMessage = error.message;
-									signupAuthState.isSignUpError = true;
-									signupAuthState.errorMessage = errorMessage;
-									console.log(signupAuthState);
-									return {
-										...state,
-										isLoggedIn: signupAuthState.isLoggedIn,
-										isVerified: signupAuthState.isVerified,
-										userName: signupAuthState.userName,
-										isSignUpError:
-											signupAuthState.isSignUpError,
-										isLogInError:
-											signupAuthState.isLogInError,
-										errorMessage:
-											signupAuthState.errorMessage,
-										comments: signupAuthState.comments,
-									};
-								});
-						})
-						.catch(function (error) {
-							var errorMessage = error.message;
-						});
-				} else {
-					signupAuthState.isSignUpError = true;
-					signupAuthState.errorMessage =
-						"Please enter both email and password.";
-				}
-			}
-			console.log(signupAuthState);
-			break;
-		// return {
-		// 	...state,
-		// 	isLoggedIn: signupAuthState.isLoggedIn,
-		// 	isVerified: signupAuthState.isVerified,
-		// 	userName: signupAuthState.userName,
-		// 	isSignUpError: signupAuthState.isSignUpError,
-		// 	isLogInError: signupAuthState.isLogInError,
-		// 	errorMessage: signupAuthState.errorMessage,
-		// 	comments: signupAuthState.comments,
-		// };
-
 		case actionTypes.SET_AUTH_STATE:
-			console.log("Set Auth State" + action.authState);
 			return {
 				...state,
 				isLoggedIn: action.authState.isLoggedIn,
@@ -135,10 +60,3 @@ const authReducer = (state = initialAuthState, action) => {
 };
 
 export default authReducer;
-// this.isLoggedIn = false;
-// this.isVerified = false;
-// this.userName = "Awesome User";
-// this.isSignUpError = false;
-// this.isLogInError = false;
-// this.errorMessage = "";
-// this.comments = "";

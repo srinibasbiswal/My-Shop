@@ -1,4 +1,5 @@
 import { actionTypes } from "../data/enums/actionTypes";
+import { authResponses } from "../data/enums/authResponses";
 import { authTypes } from "../data/enums/authTypes";
 import AuthStateDocument from "../documents/AuthStateDocument";
 import firebase from "../firebaseConfig";
@@ -41,14 +42,18 @@ const createUserUsingEmail = (dispatch, email, password) => {
 				.auth()
 				.createUserWithEmailAndPassword(email, password)
 				.then((user) => {
-					console.log(user);
+					signupAuthState.userId = user.uid;
+					signupAuthState.userName = user.email;
+					dispatch({
+						type: authResponses.SIGN_UP_SUCCESS,
+						authState: signupAuthState,
+					});
 				})
 				.catch(function (error) {
-					var errorMessage = error.message;
 					signupAuthState.isSignUpError = true;
-					signupAuthState.errorMessage = errorMessage;
+					signupAuthState.errorMessage = error.message;
 					dispatch({
-						type: actionTypes.SIGNUP_ERROR,
+						type: authResponses.SIGN_UP_ERROR,
 						authState: signupAuthState,
 					});
 				});
