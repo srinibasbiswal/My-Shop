@@ -1,3 +1,4 @@
+import { setAuthState } from "../actions/authActions";
 import { actionTypes } from "../data/enums/actionTypes";
 import { authTypes } from "../data/enums/authTypes";
 import AuthStateDocument from "../documents/AuthStateDocument";
@@ -31,6 +32,18 @@ const authReducer = (state = initialAuthState, action) => {
 				comments: loginAuthState.comments,
 			};
 
+		case actionTypes.SIGNUP_ERROR:
+			return {
+				...state,
+				isLoggedIn: action.authState.isLoggedIn,
+				isVerified: action.authState.isVerified,
+				userName: action.authState.userName,
+				isSignUpError: action.authState.isSignUpError,
+				isLogInError: action.authState.isLogInError,
+				errorMessage: action.authState.errorMessage,
+				comments: action.authState.comments,
+			};
+
 		case actionTypes.SIGNUP:
 			var signupAuthState = new AuthStateDocument();
 			if (
@@ -43,29 +56,47 @@ const authReducer = (state = initialAuthState, action) => {
 					action.email !== "" &&
 					action.password !== ""
 				) {
+					// signupAuthState = createUser(
+					// 	signupAuthState,
+					// 	action.email,
+					// 	action.password
+					// );
+
 					firebase
 						.auth()
 						.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 						.then(function () {
-							return (
-								firebase
-									.auth()
-									.createUserWithEmailAndPassword(
-										action.email,
-										action.password
-									)
-									// .then((signupAuthState.userName = action.email))
-									.catch(function (error) {
-										var errorMessage = error.message;
-										signupAuthState.isSignUpError = true;
-										signupAuthState.errorMessage = errorMessage;
-									})
-							);
+							return firebase
+								.auth()
+								.createUserWithEmailAndPassword(
+									action.email,
+									action.password
+								)
+								.then((user) => {
+									console.log(user);
+								})
+								.catch(function (error) {
+									var errorMessage = error.message;
+									signupAuthState.isSignUpError = true;
+									signupAuthState.errorMessage = errorMessage;
+									console.log(signupAuthState);
+									return {
+										...state,
+										isLoggedIn: signupAuthState.isLoggedIn,
+										isVerified: signupAuthState.isVerified,
+										userName: signupAuthState.userName,
+										isSignUpError:
+											signupAuthState.isSignUpError,
+										isLogInError:
+											signupAuthState.isLogInError,
+										errorMessage:
+											signupAuthState.errorMessage,
+										comments: signupAuthState.comments,
+									};
+								});
 						})
 						.catch(function (error) {
 							var errorMessage = error.message;
-							signupAuthState.isSignUpError = true;
-							signupAuthState.errorMessage = errorMessage;
 						});
 				} else {
 					signupAuthState.isSignUpError = true;
@@ -73,17 +104,31 @@ const authReducer = (state = initialAuthState, action) => {
 						"Please enter both email and password.";
 				}
 			}
+			console.log(signupAuthState);
+			break;
+		// return {
+		// 	...state,
+		// 	isLoggedIn: signupAuthState.isLoggedIn,
+		// 	isVerified: signupAuthState.isVerified,
+		// 	userName: signupAuthState.userName,
+		// 	isSignUpError: signupAuthState.isSignUpError,
+		// 	isLogInError: signupAuthState.isLogInError,
+		// 	errorMessage: signupAuthState.errorMessage,
+		// 	comments: signupAuthState.comments,
+		// };
+
+		case actionTypes.SET_AUTH_STATE:
+			console.log("Set Auth State" + action.authState);
 			return {
 				...state,
-				isLoggedIn: signupAuthState.isLoggedIn,
-				isVerified: signupAuthState.isVerified,
-				userName: signupAuthState.userName,
-				isSignUpError: signupAuthState.isSignUpError,
-				isLogInError: signupAuthState.isLogInError,
-				errorMessage: signupAuthState.errorMessage,
-				comments: signupAuthState.comments,
+				isLoggedIn: action.authState.isLoggedIn,
+				isVerified: action.authState.isVerified,
+				userName: action.authState.userName,
+				isSignUpError: action.authState.isSignUpError,
+				isLogInError: action.authState.isLogInError,
+				errorMessage: action.authState.errorMessage,
+				comments: action.authState.comments,
 			};
-
 		default:
 			return state;
 	}

@@ -10,4 +10,6 @@ export const actionTypes = {
 	CREATE_PO: "Create Purchase Order",
 	LOGIN: "Log In",
 	SIGNUP: "Sign Up",
+	SET_AUTH_STATE: "Set Auth State",
+	SIGNUP_ERROR: "Sign Up Error",
 };
