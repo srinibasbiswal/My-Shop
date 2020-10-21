@@ -45,7 +45,7 @@ const authReducer = (state = initialAuthState, action) => {
 				comments: action.authState.comments,
 			};
 
-		case actionTypes.SET_AUTH_STATE:
+		case authResponses.SET_AUTH_STATE:
 			return {
 				...state,
 				isLoggedIn: action.authState.isLoggedIn,
@@ -55,6 +55,7 @@ const authReducer = (state = initialAuthState, action) => {
 				isLogInError: action.authState.isLogInError,
 				errorMessage: action.authState.errorMessage,
 				comments: action.authState.comments,
+				isOTPSent: action.authState.isOTPSent,
 			};
 		default:
 			return state;

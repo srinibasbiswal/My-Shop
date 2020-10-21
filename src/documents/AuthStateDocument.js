@@ -8,6 +8,7 @@ class AuthStateDocument {
 		this.isLogInError = false;
 		this.errorMessage = "";
 		this.comments = "";
+		this.isOTPSent = false;
 	}
 }
 

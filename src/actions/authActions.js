@@ -3,6 +3,7 @@ import { authResponses } from "../data/enums/authResponses";
 import { authTypes } from "../data/enums/authTypes";
 import AuthStateDocument from "../documents/AuthStateDocument";
 import firebase from "../firebaseConfig";
+import * as firebaseui from "firebaseui";
 
 export const logIn = (authType, email, password, rememberMe) => {
 	console.log(authType, email, password, rememberMe);
@@ -18,11 +19,19 @@ export const logIn = (authType, email, password, rememberMe) => {
 	};
 };
 
-export const signUp = (authType, email, password) => {
+export const signUp = (authType, email, password, phoneNumber, otp) => {
 	return (dispatch) => {
 		switch (authType) {
 			case authTypes.EMAIL:
 				createUserUsingEmail(dispatch, email, password);
+				break;
+
+			case authTypes.PHONE:
+				if (otp === undefined || otp === "") {
+					createUserUsingPhone(dispatch, phoneNumber);
+				} else {
+					onSubmitOtp(dispatch, otp);
+				}
 				break;
 
 			default:
@@ -112,6 +121,83 @@ const logInUsingEmail = (dispatch, email, password, rememberMe) => {
 			dispatch({
 				type: authResponses.SIGN_UP_ERROR,
 				authState: logInAuthState,
+			});
+		});
+};
+
+const createUserUsingPhone = (dispatch, phoneNumber) => {
+	console.log("inside authaction phoneNumber : " + phoneNumber);
+	var signupAuthState = new AuthStateDocument();
+	console.log(phoneNumber);
+	setUpRecaptcha();
+	let appVerifier = window.recaptchaVerifier;
+	firebase
+		.auth()
+		.signInWithPhoneNumber("+" + phoneNumber.toString(), appVerifier)
+		.then(function (confirmationResult) {
+			window.confirmationResult = confirmationResult;
+			console.log("OTP is sent");
+			signupAuthState.isOTPSent = true;
+			dispatch({
+				type: authResponses.SET_AUTH_STATE,
+				authState: signupAuthState,
+			});
+		})
+		.catch(function (error) {
+			signupAuthState.isSignUpError = true;
+			if (error.code === "auth/invalid-phone-number")
+				signupAuthState.errorMessage = "Invalid Phone Number";
+			else {
+				signupAuthState.errorMessage = error.message;
+			}
+			console.log(error);
+			dispatch({
+				type: authResponses.SIGN_UP_ERROR,
+				authState: signupAuthState,
+			});
+		});
+};
+
+const setUpRecaptcha = () => {
+	window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+		"recaptcha-container",
+		{
+			size: "invisible",
+			callback: function (response) {
+				console.log("Captcha Resolved");
+				createUserUsingPhone();
+			},
+			defaultCountry: "IN",
+		}
+	);
+};
+
+const onSubmitOtp = (dispatch, otp) => {
+	console.log("inside authaction otp : " + otp);
+	var signupAuthState = new AuthStateDocument();
+	let otpInput = otp.toString();
+	let optConfirm = window.confirmationResult;
+	optConfirm
+		.confirm(otpInput)
+		.then(function (result) {
+			let user = result.user;
+			console.log(user);
+			signupAuthState.userId = user.uid;
+			signupAuthState.userName = user.email;
+			dispatch({
+				type: authResponses.SIGN_UP_SUCCESS,
+				authState: signupAuthState,
+			});
+		})
+		.catch(function (error) {
+			console.log(error);
+			alert("Incorrect OTP");
+			signupAuthState.isSignUpError = true;
+			signupAuthState.errorMessage = error.message;
+			console.log(error);
+			dispatch({
+				type: authResponses.SIGN_UP_ERROR,
+				authState: signupAuthState,
 			});
 		});
 };
