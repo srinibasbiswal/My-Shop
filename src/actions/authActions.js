@@ -41,25 +41,14 @@ export const signUp = (authType, email, password, phoneNumber, otp) => {
 };
 
 export const logOut = () => {
-	var authStateDoc = new AuthStateDocument();
-	firebase
-		.auth()
-		.signOut()
-		.then(function () {
-			// Sign-out successful.
-			return {
-				type: actionTypes.SET_AUTH_STATE,
-				authState: authStateDoc,
-			};
-		})
-		.catch(function (error) {
-			// An error happened.
-		});
+	return (dispatch) => {
+		logOutDispatcher(dispatch);
+	};
 };
 
 export const setAuthState = (authState) => {
 	return {
-		type: actionTypes.SET_AUTH_STATE,
+		type: authResponses.SET_AUTH_STATE,
 		authState: authState,
 	};
 };
@@ -74,6 +63,7 @@ const createUserUsingEmail = (dispatch, email, password) => {
 				.auth()
 				.createUserWithEmailAndPassword(email, password)
 				.then((user) => {
+					signupAuthState.isLoggedIn = true;
 					signupAuthState.userId = user.uid;
 					signupAuthState.userName = user.email;
 					dispatch({
@@ -114,6 +104,7 @@ const logInUsingEmail = (dispatch, email, password, rememberMe) => {
 				.auth()
 				.signInWithEmailAndPassword(email, password)
 				.then((user) => {
+					logInAuthState.isLoggedIn = true;
 					logInAuthState.userId = user.user.uid;
 					logInAuthState.userName = user.user.email;
 					dispatch({
@@ -198,6 +189,7 @@ const onSubmitOtp = (dispatch, otp) => {
 			let user = result.user;
 			signupAuthState.userId = user.uid;
 			signupAuthState.userName = user.email;
+			signupAuthState.isLoggedIn = true;
 			dispatch({
 				type: authResponses.SIGN_UP_SUCCESS,
 				authState: signupAuthState,
@@ -209,6 +201,27 @@ const onSubmitOtp = (dispatch, otp) => {
 			dispatch({
 				type: authResponses.SIGN_UP_ERROR,
 				authState: signupAuthState,
+			});
+		});
+};
+
+const logOutDispatcher = (dispatch) => {
+	var authStateDoc = new AuthStateDocument();
+	firebase
+		.auth()
+		.signOut()
+		.then(function () {
+			// Sign-out successful.
+			dispatch({
+				type: authResponses.SET_AUTH_STATE,
+				authState: authStateDoc,
+			});
+		})
+		.catch(function (error) {
+			// An error happened.
+			dispatch({
+				type: authResponses.SET_AUTH_STATE,
+				authState: authStateDoc,
 			});
 		});
 };
