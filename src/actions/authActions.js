@@ -40,8 +40,24 @@ export const signUp = (authType, email, password, phoneNumber, otp) => {
 	};
 };
 
+export const logOut = () => {
+	var authStateDoc = new AuthStateDocument();
+	firebase
+		.auth()
+		.signOut()
+		.then(function () {
+			// Sign-out successful.
+			return {
+				type: actionTypes.SET_AUTH_STATE,
+				authState: authStateDoc,
+			};
+		})
+		.catch(function (error) {
+			// An error happened.
+		});
+};
+
 export const setAuthState = (authState) => {
-	console.log(authState);
 	return {
 		type: actionTypes.SET_AUTH_STATE,
 		authState: authState,
@@ -173,7 +189,6 @@ const setUpRecaptcha = () => {
 };
 
 const onSubmitOtp = (dispatch, otp) => {
-	console.log("inside authaction otp : " + otp);
 	var signupAuthState = new AuthStateDocument();
 	let otpInput = otp.toString();
 	let optConfirm = window.confirmationResult;
@@ -181,7 +196,6 @@ const onSubmitOtp = (dispatch, otp) => {
 		.confirm(otpInput)
 		.then(function (result) {
 			let user = result.user;
-			console.log(user);
 			signupAuthState.userId = user.uid;
 			signupAuthState.userName = user.email;
 			dispatch({
@@ -190,11 +204,8 @@ const onSubmitOtp = (dispatch, otp) => {
 			});
 		})
 		.catch(function (error) {
-			console.log(error);
-			alert("Incorrect OTP");
 			signupAuthState.isSignUpError = true;
 			signupAuthState.errorMessage = error.message;
-			console.log(error);
 			dispatch({
 				type: authResponses.SIGN_UP_ERROR,
 				authState: signupAuthState,
