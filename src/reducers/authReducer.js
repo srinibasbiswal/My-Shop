@@ -21,6 +21,7 @@ const authReducer = (state = initialAuthState, action) => {
 			}
 			return {
 				...state,
+				userId: loginAuthState.userId,
 				isLoggedIn: loginAuthState.isLoggedIn,
 				isVerified: loginAuthState.isVerified,
 				userName: loginAuthState.userName,
@@ -36,6 +37,7 @@ const authReducer = (state = initialAuthState, action) => {
 		case authResponses.LOG_IN_ERROR:
 			return {
 				...state,
+				userId: action.authState.userId,
 				isLoggedIn: action.authState.isLoggedIn,
 				isVerified: action.authState.isVerified,
 				userName: action.authState.userName,
@@ -48,6 +50,7 @@ const authReducer = (state = initialAuthState, action) => {
 		case authResponses.SET_AUTH_STATE:
 			return {
 				...state,
+				userId: action.authState.userId,
 				isLoggedIn: action.authState.isLoggedIn,
 				isVerified: action.authState.isVerified,
 				userName: action.authState.userName,
