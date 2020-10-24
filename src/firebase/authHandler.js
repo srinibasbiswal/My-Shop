@@ -147,13 +147,14 @@ export const onSubmitOtp = (dispatch, otp) => {
 			let user = result.user;
 			console.log(user);
 			signupAuthState.userId = user.uid;
-			signupAuthState.userName = user.email;
+			signupAuthState.userName = user.phoneNumber;
 			signupAuthState.isLoggedIn = true;
 
 			var userDoc = new UserDocument();
-			userDoc.userName = user.phone;
-			userDoc.phoneNumber = user.phone;
+			userDoc.userName = user.phoneNumber;
+			userDoc.phoneNumber = user.phoneNumber;
 			userDoc.authType = authTypes.PHONE;
+			userDoc.isVerified = true;
 			createNewUser(dispatch, user.uid, userDoc);
 
 			dispatch({
@@ -203,7 +204,7 @@ const createNewUser = (dispatch, id, user) => {
 				db.collection("users")
 					.doc(id)
 					.set({
-						userName: user.userName,
+						userName: user.userName.toString(),
 						email: user.email,
 						phoneNumber: user.phoneNumber,
 						authType: user.authType,
