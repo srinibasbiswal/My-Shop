@@ -1,6 +1,10 @@
 import firebase from "../firebaseConfig";
 import AuthStateDocument from "../documents/AuthStateDocument";
 import { authResponses } from "../data/enums/authResponses";
+import UserDocument from "../documents/UserDocument";
+import { authTypes } from "../data/enums/authTypes";
+
+const db = firebase.firestore();
 
 export const createUserUsingEmail = (dispatch, email, password) => {
 	var signupAuthState = new AuthStateDocument();
@@ -11,10 +15,15 @@ export const createUserUsingEmail = (dispatch, email, password) => {
 			return firebase
 				.auth()
 				.createUserWithEmailAndPassword(email, password)
-				.then((user) => {
+				.then((result) => {
 					signupAuthState.isLoggedIn = true;
-					signupAuthState.userId = user.uid;
-					signupAuthState.userName = user.email;
+					signupAuthState.userId = result.user.uid;
+					signupAuthState.userName = result.user.email;
+					var user = new UserDocument();
+					user.userName = result.user.email;
+					user.email = result.user.email;
+					user.authType = authTypes.EMAIL;
+					createNewUser(dispatch, result.user.uid, user);
 					dispatch({
 						type: authResponses.SIGN_UP_SUCCESS,
 						authState: signupAuthState,
@@ -136,9 +145,17 @@ export const onSubmitOtp = (dispatch, otp) => {
 		.confirm(otpInput)
 		.then(function (result) {
 			let user = result.user;
+			console.log(user);
 			signupAuthState.userId = user.uid;
 			signupAuthState.userName = user.email;
 			signupAuthState.isLoggedIn = true;
+
+			var userDoc = new UserDocument();
+			userDoc.userName = user.phone;
+			userDoc.phoneNumber = user.phone;
+			userDoc.authType = authTypes.PHONE;
+			createNewUser(dispatch, user.uid, userDoc);
+
 			dispatch({
 				type: authResponses.SIGN_UP_SUCCESS,
 				authState: signupAuthState,
@@ -172,5 +189,35 @@ export const logOutDispatcher = (dispatch) => {
 				type: authResponses.SET_AUTH_STATE,
 				authState: authStateDoc,
 			});
+		});
+};
+
+const createNewUser = (dispatch, id, user) => {
+	var docRef = db.collection("users").doc(id);
+	docRef
+		.get()
+		.then(function (doc) {
+			if (doc.exists) {
+				console.log("Document data:", doc.data());
+			} else {
+				db.collection("users")
+					.doc(id)
+					.set({
+						userName: user.userName,
+						email: user.email,
+						phoneNumber: user.phoneNumber,
+						authType: user.authType,
+						isVerified: user.isVerified,
+					})
+					.then(function () {
+						console.log("Document successfully written!");
+					})
+					.catch(function (error) {
+						console.error("Error writing document: ", error);
+					});
+			}
+		})
+		.catch(function (error) {
+			console.log("Error getting document:", error);
 		});
 };
