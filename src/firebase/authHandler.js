@@ -149,6 +149,7 @@ export const onSubmitOtp = (dispatch, otp) => {
 			signupAuthState.userId = user.uid;
 			signupAuthState.userName = user.phoneNumber;
 			signupAuthState.isLoggedIn = true;
+			signupAuthState.isVerified = true;
 
 			var userDoc = new UserDocument();
 			userDoc.userName = user.phoneNumber;

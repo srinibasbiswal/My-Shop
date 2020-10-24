@@ -1,5 +1,6 @@
 import { actionTypes } from "../data/enums/actionTypes";
 import { calculateAmount, resetAmount } from "./amountActions";
+import { setCartDB } from "../firebase/cartHandler";
 import store from "../store";
 
 export const addItem = (itemId, quantity) => {
@@ -18,6 +19,12 @@ export const removeItem = (itemId, quantity) => {
 	};
 };
 
+export const resetCart = () => {
+	return {
+		type: actionTypes.RESET_CART,
+	};
+};
+
 export const deleteItemFromCart = (itemId) => {
 	if (
 		store.getState().cart !== undefined &&
@@ -27,6 +34,10 @@ export const deleteItemFromCart = (itemId) => {
 		const quantity = store.getState().cart.itemMap[itemId];
 		return function (dispatch) {
 			dispatch(removeItem(itemId, quantity));
+			setCartDB(
+				store.getState().authentication.userId,
+				store.getState().cart
+			);
 			dispatch(calculateAmount(store.getState()));
 		};
 	} else {
@@ -34,15 +45,13 @@ export const deleteItemFromCart = (itemId) => {
 	}
 };
 
-export const resetCart = () => {
-	return {
-		type: actionTypes.RESET_CART,
-	};
-};
-
 export const addAndCalculateItem = (itemId, quantity) => {
 	return function (dispatch) {
 		dispatch(addItem(itemId, quantity));
+		setCartDB(
+			store.getState().authentication.userId,
+			store.getState().cart
+		);
 		dispatch(calculateAmount(store.getState()));
 	};
 };
@@ -50,6 +59,10 @@ export const addAndCalculateItem = (itemId, quantity) => {
 export const removeAndCalculateItem = (itemId, quantity) => {
 	return function (dispatch) {
 		dispatch(removeItem(itemId, quantity));
+		setCartDB(
+			store.getState().authentication.userId,
+			store.getState().cart
+		);
 		dispatch(calculateAmount(store.getState()));
 	};
 };
@@ -57,6 +70,10 @@ export const removeAndCalculateItem = (itemId, quantity) => {
 export const resetCartAndCalculate = () => {
 	return function (dispatch) {
 		dispatch(resetCart());
+		setCartDB(
+			store.getState().authentication.userId,
+			store.getState().cart
+		);
 		dispatch(resetAmount());
 	};
 };
