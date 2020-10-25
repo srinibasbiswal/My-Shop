@@ -3,10 +3,15 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import { searchTypes } from "../data/enums/searchType";
 import styles from "../stylesheets/style.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../actions/authActions";
 
 function Header(props) {
+	const dispatch = useDispatch();
+
 	const searchType = searchTypes.ITEM;
 	const [searchValue, setSearchValue] = useState("");
+	const authentication = useSelector((state) => state.authentication);
 
 	const setSearch = (event) => {
 		const target = event.target;
@@ -15,6 +20,11 @@ function Header(props) {
 
 	const handleSubmit = (e) => {
 		props.history.push(`/${searchType}/search/${searchValue}`);
+	};
+
+	const logOutAccount = (e) => {
+		e.preventDefault();
+		dispatch(logOut());
 	};
 
 	return (
@@ -72,6 +82,23 @@ function Header(props) {
 								/>
 							</form>
 						</li>
+						{console.log(authentication)}
+						{(() => {
+							if (authentication.isLoggedIn) {
+								return (
+									<li className={`uk-navbar-item`}>
+										<p>Hi {authentication.userName}</p>
+										<button
+											className={`uk-button uk-button-default`}
+											onClick={(e) => logOutAccount(e)}
+										>
+											Logout
+										</button>
+									</li>
+								);
+							}
+						})()}
+
 						<li>
 							<Link to="/cart">
 								<a
@@ -81,12 +108,15 @@ function Header(props) {
 								></a>
 							</Link>
 						</li>
+
 						<li className={`uk-visible@m`}>
-							<a
-								href="#"
-								data-uk-icon="icon: info"
-								className={`${styles.textColorWhite}`}
-							></a>
+							<Link to="/signup">
+								<a
+									href="#"
+									data-uk-icon="icon: info"
+									className={`${styles.textColorWhite}`}
+								></a>
+							</Link>
 						</li>
 					</ul>
 				</div>

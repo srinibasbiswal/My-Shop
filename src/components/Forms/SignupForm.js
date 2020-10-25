@@ -37,8 +37,6 @@ function SignupForm() {
 	};
 
 	const submitPhoneNumber = (e) => {
-		console.log("Came here");
-		console.log(formik.values);
 		formik.values.phoneNumber = formik.values.phoneNumber.toString();
 		formik.values.otp = "";
 		formik.handleSubmit(e);
@@ -155,9 +153,6 @@ function SignupForm() {
 							onClick={() => setAuthTypeState(authTypes.PHONE)}
 						>
 							Phone Number
-						</button>
-						<button className={`uk-button uk-button-primary`}>
-							Google
 						</button>
 					</div>
 				</div>
@@ -338,9 +333,6 @@ function SignupForm() {
 							onClick={() => setAuthTypeState(authTypes.EMAIL)}
 						>
 							Email
-						</button>
-						<button className={`uk-button uk-button-primary`}>
-							Google
 						</button>
 					</div>
 				</div>

@@ -1,36 +1,58 @@
 import React from "react";
 import { useFormik } from "formik";
-import firebase from "../../firebaseConfig";
+import { logIn } from "../../actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { authTypes } from "../../data/enums/authTypes";
 
 function SignupForm() {
+	const dispatch = useDispatch();
+	const authentication = useSelector((state) => state.authentication);
+
 	const formik = useFormik({
 		initialValues: {
 			email: "",
 			password: "",
+			rememberMe: false,
 		},
 		onSubmit: (values) => {
-			firebase
-				.auth()
-				.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-				.then(function () {
-					return firebase
-						.auth()
-						.signInWithEmailAndPassword(
-							values.email,
-							values.password
-						)
-						.catch(function (error) {
-							var errorCode = error.code;
-							var errorMessage = error.message;
-							// ...
-						});
-				})
-				.catch(function (error) {
-					var errorCode = error.code;
-					var errorMessage = error.message;
-				});
+			dispatch(
+				logIn(
+					authTypes.EMAIL,
+					values.email,
+					values.password,
+					values.rememberMe
+				)
+			);
 		},
 	});
+	// const formik = useFormik({
+	// 	initialValues: {
+	// 		email: "",
+	// 		password: "",
+	// 	},
+	// 	onSubmit: (values) => {
+	// 		firebase
+	// 			.auth()
+	// 			.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+	// 			.then(function () {
+	// 				return firebase
+	// 					.auth()
+	// 					.signInWithEmailAndPassword(
+	// 						values.email,
+	// 						values.password
+	// 					)
+	// 					.catch(function (error) {
+	// 						var errorCode = error.code;
+	// 						var errorMessage = error.message;
+	// 						// ...
+	// 					});
+	// 			})
+	// 			.catch(function (error) {
+	// 				var errorCode = error.code;
+	// 				var errorMessage = error.message;
+	// 			});
+	// 	},
+	// });
 
 	return (
 		<div className={`uk-card uk-card-body uk-card-default`}>
@@ -75,6 +97,58 @@ function SignupForm() {
 							value={formik.values.password}
 						/>
 					</div>
+					<div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+						<label>
+							<input
+								class="uk-checkbox"
+								type="checkbox"
+								id="rememberMe"
+								name="rememberMe"
+								onChange={formik.handleChange}
+								value={false}
+							/>{" "}
+							Remember Me
+						</label>
+					</div>
+
+					{(() => {
+						if (authentication.isLogInError) {
+							return (
+								<div
+									class="uk-alert-danger uk-text-center"
+									uk-alert={`true`}
+								>
+									<a
+										class="uk-alert-close"
+										uk-close={`true`}
+									></a>
+									{(() => {
+										if (
+											authentication.errorMessage !==
+												undefined &&
+											authentication.errorMessage !== ""
+										) {
+											return (
+												<p>
+													{
+														authentication.errorMessage
+													}
+												</p>
+											);
+										} else {
+											return (
+												<p>
+													Sorry! Some error occurred.
+													Please try again later.
+												</p>
+											);
+										}
+									})()}
+								</div>
+							);
+						}
+					})()}
+
 					<div className={`uk-margin uk-width-1-1 uk-text-center`}>
 						<button
 							className={`uk-button uk-button-primary uk-border-rounded`}
