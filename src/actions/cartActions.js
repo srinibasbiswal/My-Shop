@@ -25,6 +25,13 @@ export const resetCart = () => {
 	};
 };
 
+export const setCart = (cartDoc) => {
+	return {
+		type: actionTypes.SET_CART,
+		cart: cartDoc,
+	};
+};
+
 export const deleteItemFromCart = (itemId) => {
 	if (
 		store.getState().cart !== undefined &&
@@ -34,10 +41,12 @@ export const deleteItemFromCart = (itemId) => {
 		const quantity = store.getState().cart.itemMap[itemId];
 		return function (dispatch) {
 			dispatch(removeItem(itemId, quantity));
-			setCartDB(
-				store.getState().authentication.userId,
-				store.getState().cart
-			);
+			if (store.getState().authentication.isLoggedIn) {
+				setCartDB(
+					store.getState().authentication.userId,
+					store.getState().cart
+				);
+			}
 			dispatch(calculateAmount(store.getState()));
 		};
 	} else {
@@ -48,10 +57,12 @@ export const deleteItemFromCart = (itemId) => {
 export const addAndCalculateItem = (itemId, quantity) => {
 	return function (dispatch) {
 		dispatch(addItem(itemId, quantity));
-		setCartDB(
-			store.getState().authentication.userId,
-			store.getState().cart
-		);
+		if (store.getState().authentication.isLoggedIn) {
+			setCartDB(
+				store.getState().authentication.userId,
+				store.getState().cart
+			);
+		}
 		dispatch(calculateAmount(store.getState()));
 	};
 };
@@ -59,10 +70,12 @@ export const addAndCalculateItem = (itemId, quantity) => {
 export const removeAndCalculateItem = (itemId, quantity) => {
 	return function (dispatch) {
 		dispatch(removeItem(itemId, quantity));
-		setCartDB(
-			store.getState().authentication.userId,
-			store.getState().cart
-		);
+		if (store.getState().authentication.isLoggedIn) {
+			setCartDB(
+				store.getState().authentication.userId,
+				store.getState().cart
+			);
+		}
 		dispatch(calculateAmount(store.getState()));
 	};
 };
@@ -70,10 +83,19 @@ export const removeAndCalculateItem = (itemId, quantity) => {
 export const resetCartAndCalculate = () => {
 	return function (dispatch) {
 		dispatch(resetCart());
-		setCartDB(
-			store.getState().authentication.userId,
-			store.getState().cart
-		);
+		if (store.getState().authentication.isLoggedIn) {
+			setCartDB(
+				store.getState().authentication.userId,
+				store.getState().cart
+			);
+		}
 		dispatch(resetAmount());
+	};
+};
+
+export const setCartAndCalculate = (cartDoc) => {
+	return function (dispatch) {
+		dispatch(setCart(cartDoc));
+		dispatch(calculateAmount(store.getState()));
 	};
 };
