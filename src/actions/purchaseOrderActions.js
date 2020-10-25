@@ -1,4 +1,5 @@
 import { actionTypes } from "../data/enums/actionTypes";
+import { createPO } from "../firebase/purchaseOrderHandler";
 import store from "../store";
 import { resetCartAndCalculate } from "./cartActions";
 
@@ -23,6 +24,7 @@ export const createPurchaseOrder = () => {
 export const generatePO = () => {
 	return function (dispatch) {
 		dispatch(createPurchaseOrder());
+		createPO(store.getState().purchaseOrder);
 		dispatch(resetCartAndCalculate());
 	};
 };
