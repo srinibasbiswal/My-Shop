@@ -96,6 +96,6 @@ export const resetCartAndCalculate = () => {
 export const setCartAndCalculate = (cartDoc) => {
 	return function (dispatch) {
 		dispatch(setCart(cartDoc));
-		dispatch(calculateAmount(store.getState()));
+		dispatch(resetAmount());
 	};
 };
