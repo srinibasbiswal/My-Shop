@@ -3,10 +3,12 @@ import AuthStateDocument from "../documents/AuthStateDocument";
 import { authResponses } from "../data/enums/authResponses";
 import UserDocument from "../documents/UserDocument";
 import { authTypes } from "../data/enums/authTypes";
+import CartStateDocument from "../documents/CartStateDocument";
+import { setCartDB } from "./cartHandler";
 
 const db = firebase.firestore();
 
-export const createUserUsingEmail = (dispatch, email, password) => {
+export const createUserUsingEmail = (dispatch, cart, email, password) => {
 	var signupAuthState = new AuthStateDocument();
 	firebase
 		.auth()
@@ -24,6 +26,11 @@ export const createUserUsingEmail = (dispatch, email, password) => {
 					user.email = result.user.email;
 					user.authType = authTypes.EMAIL;
 					createNewUser(dispatch, result.user.uid, user);
+					var cartStateDoc = new CartStateDocument();
+					cartStateDoc.numberOfItems = cart.numberOfItems;
+					cartStateDoc.itemCodes = cart.itemCodes;
+					cartStateDoc.itemMap = cart.itemMap;
+					setCartDB(result.user.uid, cartStateDoc);
 					dispatch({
 						type: authResponses.SIGN_UP_SUCCESS,
 						authState: signupAuthState,
@@ -49,7 +56,13 @@ export const createUserUsingEmail = (dispatch, email, password) => {
 		});
 };
 
-export const logInUsingEmail = (dispatch, email, password, rememberMe) => {
+export const logInUsingEmail = (
+	dispatch,
+	cart,
+	email,
+	password,
+	rememberMe
+) => {
 	var logInAuthState = new AuthStateDocument();
 	var persistance =
 		rememberMe !== undefined && rememberMe ? `LOCAL` : `SESSION`;
@@ -65,6 +78,13 @@ export const logInUsingEmail = (dispatch, email, password, rememberMe) => {
 					logInAuthState.isLoggedIn = true;
 					logInAuthState.userId = user.user.uid;
 					logInAuthState.userName = user.user.email;
+
+					var cartStateDoc = new CartStateDocument();
+					cartStateDoc.numberOfItems = cart.numberOfItems;
+					cartStateDoc.itemCodes = cart.itemCodes;
+					cartStateDoc.itemMap = cart.itemMap;
+					setCartDB(user.user.uid, cartStateDoc);
+
 					dispatch({
 						type: authResponses.LOG_IN_SUCCESS,
 						authState: logInAuthState,
@@ -137,7 +157,7 @@ const setUpRecaptcha = () => {
 	);
 };
 
-export const onSubmitOtp = (dispatch, otp) => {
+export const onSubmitOtp = (dispatch, cart, otp) => {
 	var signupAuthState = new AuthStateDocument();
 	let otpInput = otp.toString();
 	let optConfirm = window.confirmationResult;
@@ -157,6 +177,12 @@ export const onSubmitOtp = (dispatch, otp) => {
 			userDoc.authType = authTypes.PHONE;
 			userDoc.isVerified = true;
 			createNewUser(dispatch, user.uid, userDoc);
+
+			var cartStateDoc = new CartStateDocument();
+			cartStateDoc.numberOfItems = cart.numberOfItems;
+			cartStateDoc.itemCodes = cart.itemCodes;
+			cartStateDoc.itemMap = cart.itemMap;
+			setCartDB(user.uid, cartStateDoc);
 
 			dispatch({
 				type: authResponses.SIGN_UP_SUCCESS,

@@ -1,6 +1,6 @@
 import { authResponses } from "../data/enums/authResponses";
 import { authTypes } from "../data/enums/authTypes";
-
+import store from "../store";
 import {
 	createUserUsingEmail,
 	logInUsingEmail,
@@ -8,13 +8,21 @@ import {
 	onSubmitOtp,
 	logOutDispatcher,
 } from "../firebase/authHandler";
+import { resetAmount } from "./amountActions";
+import { resetCart } from "./cartActions";
 
 export const logIn = (authType, email, password, rememberMe) => {
 	console.log(authType, email, password, rememberMe);
 	return (dispatch) => {
 		switch (authType) {
 			case authTypes.EMAIL:
-				logInUsingEmail(dispatch, email, password, rememberMe);
+				logInUsingEmail(
+					dispatch,
+					store.getState().cart,
+					email,
+					password,
+					rememberMe
+				);
 				break;
 
 			default:
@@ -27,14 +35,19 @@ export const signUp = (authType, email, password, phoneNumber, otp) => {
 	return (dispatch) => {
 		switch (authType) {
 			case authTypes.EMAIL:
-				createUserUsingEmail(dispatch, email, password);
+				createUserUsingEmail(
+					dispatch,
+					store.getState().cart,
+					email,
+					password
+				);
 				break;
 
 			case authTypes.PHONE:
 				if (otp === undefined || otp === "") {
 					createUserUsingPhone(dispatch, phoneNumber);
 				} else {
-					onSubmitOtp(dispatch, otp);
+					onSubmitOtp(dispatch, store.getState().cart, otp);
 				}
 				break;
 
@@ -47,6 +60,8 @@ export const signUp = (authType, email, password, phoneNumber, otp) => {
 export const logOut = () => {
 	return (dispatch) => {
 		logOutDispatcher(dispatch);
+		dispatch(resetCart());
+		dispatch(resetAmount());
 	};
 };
 
