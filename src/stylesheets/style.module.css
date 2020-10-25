@@ -1,8 +1,10 @@
 /* Generic */
 :root {
-	--primary: #1e87f0;
-	--white: #ffffff;
-	--black: #000000;
+	--primary: #1e86ff;
+	--primaryDark: #3959a2;
+	--offWhite: #eff3f6;
+	--white: #f7faff;
+	--black: #13141f;
 	--greyDark: #9baacf;
 }
 
