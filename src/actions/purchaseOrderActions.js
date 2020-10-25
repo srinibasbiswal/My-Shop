@@ -1,6 +1,5 @@
 import { actionTypes } from "../data/enums/actionTypes";
 import store from "../store";
-import { resetAmount } from "./amountActions";
 import { resetCartAndCalculate } from "./cartActions";
 
 export const createPurchaseOrder = () => {
@@ -14,6 +13,7 @@ export const createPurchaseOrder = () => {
 			cart: store.getState().cart,
 			amount: store.getState().amount,
 			address: store.getState().address,
+			authentication: store.getState().authentication,
 		};
 	} else {
 		return store.getState();

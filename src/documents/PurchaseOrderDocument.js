@@ -17,6 +17,7 @@ class PurchaseOrderDocument {
 		this.packagingCharges = "";
 		this.otherCharges = "";
 		this.comments = "";
+		this.userId = "";
 	}
 }
 

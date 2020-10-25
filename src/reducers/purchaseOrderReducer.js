@@ -12,7 +12,8 @@ const purchaseOrderReducer = (state = initialPOState, action) => {
 			if (
 				action.cart !== undefined &&
 				action.amount !== undefined &&
-				action.address !== undefined
+				action.address !== undefined &&
+				action.authentication !== undefined
 			) {
 				var itemList = [];
 				var addressDoc = new AddressDocument();
@@ -53,6 +54,7 @@ const purchaseOrderReducer = (state = initialPOState, action) => {
 						: action.amount.packagingCharges,
 					otherCharges: "",
 					comments: "",
+					userId: action.authentication.userId,
 				};
 			} else {
 				return state;
