@@ -82,6 +82,16 @@ const cartReducer = (state = initialCartState, action) => {
 				itemCodes: defaultState.itemCodes,
 				itemMap: defaultState.itemMap,
 			};
+
+		case actionTypes.SET_CART:
+			const cartDoc = action.cart;
+			return {
+				...state,
+				numberOfItems: cartDoc.numberOfItems,
+				itemCodes: cartDoc.itemCodes,
+				itemMap: cartDoc.itemMap,
+			};
+
 		default:
 			return state;
 	}
