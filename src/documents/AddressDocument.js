@@ -10,6 +10,20 @@ class AddressDocument {
 		this.country = "India";
 		this.pin = "";
 	}
+
+	toMap() {
+		var map = {};
+		map["name"] = this.name;
+		map["phoneNumber"] = this.phoneNumber;
+		map["addr1"] = this.addr1;
+		map["addr2"] = this.addr2;
+		map["landmark"] = this.landmark;
+		map["city"] = this.city;
+		map["state"] = this.state;
+		map["country"] = this.country;
+		map["stapinte"] = this.pin;
+		return map;
+	}
 }
 
 export default AddressDocument;

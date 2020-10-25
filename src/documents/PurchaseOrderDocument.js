@@ -1,5 +1,4 @@
 import AddressDocument from "./AddressDocument";
-import ItemDocument from "./ItemDocument";
 
 class PurchaseOrderDocument {
 	constructor() {
@@ -10,7 +9,7 @@ class PurchaseOrderDocument {
 		this.phoneNumber = "";
 		this.address = new AddressDocument();
 		this.numberOfItems = "";
-		this.items = [new ItemDocument()];
+		this.items = [];
 		this.totalAmount = "";
 		this.itemAmount = "";
 		this.deliveryCharges = "";
@@ -18,6 +17,18 @@ class PurchaseOrderDocument {
 		this.otherCharges = "";
 		this.comments = "";
 		this.userId = "";
+	}
+
+	toItemsList() {
+		var list = [];
+		if (this.items !== undefined && this.items !== []) {
+			this.items.forEach((item) => {
+				list.push(item.toMap());
+			});
+			return list;
+		} else {
+			return list;
+		}
 	}
 }
 
