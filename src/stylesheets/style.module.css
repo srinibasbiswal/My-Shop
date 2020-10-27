@@ -20,6 +20,16 @@
 	background-color: var(--primary) !important;
 }
 
+.iconSize {
+	font-size: 1.25rem !important;
+}
+
+/* Header */
+
+.searchBarSmall {
+	padding: 10px 10px !important;
+}
+
 /* Footer */
 .FooterLink {
 	min-height: 30px !important;
