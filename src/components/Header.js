@@ -11,6 +11,7 @@ import {
 	FiMenu,
 	FiUserCheck,
 	FiUserPlus,
+	FiLogOut,
 } from "react-icons/fi";
 
 function Header(props) {
@@ -68,25 +69,6 @@ function Header(props) {
 
 					<div className={`uk-navbar-right`}>
 						<ul className={`uk-navbar-nav`}>
-							{console.log(authentication)}
-							{(() => {
-								if (authentication.isLoggedIn) {
-									return (
-										<li className={`uk-navbar-item`}>
-											<p>Hi {authentication.userName}</p>
-											<button
-												className={`uk-button uk-button-default`}
-												onClick={(e) =>
-													logOutAccount(e)
-												}
-											>
-												Logout
-											</button>
-										</li>
-									);
-								}
-							})()}
-
 							<li className={`uk-navbar-item`}>
 								<Link to="/cart">
 									<FiShoppingCart
@@ -104,17 +86,58 @@ function Header(props) {
 									className={`uk-border-rounded`}
 								>
 									<ul class="uk-nav uk-navbar-dropdown-nav">
-										<li class="uk-nav-header">
-											<Link to="/signup">
-												<FiUserCheck /> Log In
-											</Link>
-										</li>
+										{(() => {
+											if (authentication.isLoggedIn) {
+												return (
+													<React.Fragment>
+														<li class="uk-nav-header">
+															<p>
+																Hi,{" "}
+																{
+																	authentication.userName
+																}
+															</p>
+														</li>
+														<li class="uk-nav-header">
+															<a
+																onClick={(e) =>
+																	logOutAccount(
+																		e
+																	)
+																}
+															>
+																<FiLogOut
+																	className={` ${styles.iconSize}`}
+																/>{" "}
+																Log Out
+															</a>
+														</li>
+													</React.Fragment>
+												);
+											} else {
+												return (
+													<React.Fragment>
+														<li class="uk-nav-header">
+															<Link to="/signup">
+																<FiUserCheck
+																	className={` ${styles.iconSize}`}
+																/>{" "}
+																Log In
+															</Link>
+														</li>
 
-										<li class="uk-nav-header">
-											<Link to="/signup">
-												<FiUserPlus /> Sign Up
-											</Link>
-										</li>
+														<li class="uk-nav-header">
+															<Link to="/signup">
+																<FiUserPlus
+																	className={` ${styles.iconSize}`}
+																/>{" "}
+																Sign Up
+															</Link>
+														</li>
+													</React.Fragment>
+												);
+											}
+										})()}
 									</ul>
 								</div>
 							</li>
