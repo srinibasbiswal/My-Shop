@@ -12,6 +12,7 @@ import {
 	FiUserCheck,
 	FiUserPlus,
 	FiLogOut,
+	FiSearch,
 } from "react-icons/fi";
 
 function Header(props) {
@@ -52,15 +53,25 @@ function Header(props) {
 									</span>
 								</Link>
 							</li>
-							<li className={`uk-navbar-item`}>
+							<li className={`uk-navbar-item uk-visible@m`}>
 								<form onSubmit={handleSubmit}>
-									<input
-										className={`uk-input uk-form-width-large uk-border-rounded uk-visible@m`}
-										type="text"
-										placeholder="Search item1, item2 and more ... "
-										value={searchValue}
-										onChange={setSearch}
-									/>
+									<div class="uk-inline">
+										<a
+											className={`uk-form-icon uk-form-icon-flip uk-margin-small`}
+											onClick={() => handleSubmit()}
+										>
+											<FiSearch
+												className={`${styles.iconSize}`}
+											/>
+										</a>
+										<input
+											className={`uk-input uk-form-width-large uk-border-rounded`}
+											type="text"
+											placeholder="Search item1, item2 and more ... "
+											value={searchValue}
+											onChange={setSearch}
+										/>
+									</div>
 								</form>
 							</li>
 							<li className={`uk-navbar-item`}></li>
@@ -190,13 +201,21 @@ function Header(props) {
 			</div>
 			<div className={`uk-hidden@m ${styles.searchBarSmall}`}>
 				<form onSubmit={handleSubmit}>
-					<input
-						className={`uk-input uk-border-rounded `}
-						type="text"
-						placeholder="Search item1, item2 and more ... "
-						value={searchValue}
-						onChange={setSearch}
-					/>
+					<div class="uk-inline">
+						<a
+							className={`uk-form-icon uk-form-icon-flip uk-margin-small`}
+							onClick={() => handleSubmit()}
+						>
+							<FiSearch className={`${styles.iconSize}`} />
+						</a>
+						<input
+							className={`uk-input uk-form-width-large uk-border-rounded`}
+							type="text"
+							placeholder="Search item1, item2 and more ... "
+							value={searchValue}
+							onChange={setSearch}
+						/>
+					</div>
 				</form>
 			</div>
 		</React.Fragment>
