@@ -5,7 +5,13 @@ import { searchTypes } from "../data/enums/searchType";
 import styles from "../stylesheets/style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../actions/authActions";
-import { FiShoppingCart, FiUser, FiMenu } from "react-icons/fi";
+import {
+	FiShoppingCart,
+	FiUser,
+	FiMenu,
+	FiUserCheck,
+	FiUserPlus,
+} from "react-icons/fi";
 
 function Header(props) {
 	const dispatch = useDispatch();
@@ -90,11 +96,27 @@ function Header(props) {
 							</li>
 
 							<li className={`uk-navbar-item`}>
-								<Link to="/signup">
-									<FiUser
-										className={`${styles.textColorWhite} ${styles.iconSize}`}
-									/>
-								</Link>
+								<FiUser
+									className={`${styles.textColorWhite} ${styles.iconSize}`}
+								/>
+								<div
+									uk-dropdown="mode: click"
+									className={`uk-border-rounded`}
+								>
+									<ul class="uk-nav uk-navbar-dropdown-nav">
+										<li class="uk-nav-header">
+											<Link to="/signup">
+												<FiUserCheck /> Log In
+											</Link>
+										</li>
+
+										<li class="uk-nav-header">
+											<Link to="/signup">
+												<FiUserPlus /> Sign Up
+											</Link>
+										</li>
+									</ul>
+								</div>
 							</li>
 							<li className={`uk-navbar-item`}>
 								<FiMenu
