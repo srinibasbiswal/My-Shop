@@ -21,6 +21,15 @@
 	width: 150px !important;
 }
 
+.buttonGradient {
+	color: var(--white) !important;
+	background: rgb(30, 134, 255) !important;
+	background: linear-gradient(
+		90deg,
+		rgba(30, 134, 255, 1) 0%,
+		rgba(57, 89, 162, 1) 100%
+	) !important;
+}
 /* Header */
 
 .searchBarSmall {
