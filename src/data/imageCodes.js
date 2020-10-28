@@ -1,5 +1,5 @@
-import demoImg from "./images/demoImg.png";
+import productImg from "./images/productImg.svg";
 
 export const imageCodes = {
-    demoImg: demoImg,
+	demoImg: productImg,
 };
