@@ -1,12 +1,4 @@
 /* Generic */
-:root {
-	--primary: #1e86ff;
-	--primaryDark: #3959a2;
-	--offWhite: #eff3f6;
-	--white: #f7faff;
-	--black: #13141f;
-	--greyDark: #9baacf;
-}
 
 .textColorWhite {
 	color: var(--white) !important;
@@ -22,6 +14,11 @@
 
 .iconSize {
 	font-size: 1.25rem !important;
+}
+
+.productImg {
+	height: 150px !important;
+	width: 150px !important;
 }
 
 /* Header */

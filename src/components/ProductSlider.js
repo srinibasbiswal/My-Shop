@@ -77,11 +77,13 @@ function ProductSlider(props) {
 					uk-slider={`true`}
 				>
 					<ul
-						className={`uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-5@m uk-grid uk-padding-small uk-margin-auto`}
+						className={`uk-slider-items uk-child-width-1-2 uk-child-width-1-5@m uk-grid uk-padding-small uk-margin-auto`}
 					>
 						{productList.map((product, index) => {
 							return (
-								<li>
+								<li
+									className={`uk-padding-remove uk-margin-small-right`}
+								>
 									<ProductCard
 										id={product.id}
 										productName={product.name}
