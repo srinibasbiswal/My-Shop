@@ -179,6 +179,7 @@ function PriceBreakup(props) {
 
 						<button
 							className={`uk-button uk-width-1-1 uk-border-rounded ${styles.buttonGradient}`}
+							onClick={() => movetoAddAddress()}
 						>
 							Place Order
 						</button>

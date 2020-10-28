@@ -56,7 +56,7 @@ function ProductCard(props) {
 							return (
 								<div>
 									<button
-										className={`uk-button uk-button-primary ${styles.textColorWhite} ${styles.backgroundPrimary} uk-border-rounded uk-width-1-1 uk-padding-remove`}
+										className={`uk-button uk-button-primary uk-border-rounded uk-width-1-1 uk-padding-remove ${styles.buttonGradient}`}
 										onClick={() =>
 											increaseQuantity(props.id, 1)
 										}

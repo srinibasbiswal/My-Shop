@@ -29,7 +29,17 @@
 		rgba(30, 134, 255, 1) 0%,
 		rgba(57, 89, 162, 1) 100%
 	) !important;
+	border: 2px solid var(--primaryDark);
+	-webkit-box-shadow: 0 2px var(--primaryDark);
+	-moz-box-shadow: 0 2px var(--primaryDark);
+	box-shadow: 0 2px var(--primaryDark);
 }
+
+.buttonGradient:active {
+	transform: translateY(2px);
+	box-shadow: none;
+}
+
 /* Header */
 
 .searchBarSmall {
