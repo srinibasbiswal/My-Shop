@@ -1,5 +1,4 @@
 import React from "react";
-import slider1 from "../assets/images/img1.jpg";
 import styles from "../stylesheets/style.module.css";
 import QuantityControl from "./QuantityControl";
 import { Link } from "react-router-dom";
