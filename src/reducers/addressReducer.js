@@ -73,6 +73,21 @@ const addressReducer = (state = initialAddressState, action) => {
 				}
 			}
 
+		case actionTypes.SET_ADDRESS_STATE:
+			if (action.addressState !== undefined) {
+				var addressStateDoc = new AddressStateDocument();
+				addressStateDoc.addressCount = action.addressState.addressCount;
+				addressStateDoc.selectedAddress =
+					action.addressState.selectedAddress;
+				addressStateDoc.addressList = action.addressState.addressList;
+				return {
+					...state,
+					addressCount: addressStateDoc.addressCount,
+					selectedAddress: addressStateDoc.selectedAddress,
+					addressList: addressStateDoc.addressList,
+				};
+			}
+
 		default:
 			return state;
 	}

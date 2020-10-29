@@ -11,6 +11,7 @@ import {
 import { resetAmount } from "./amountActions";
 import { resetCart } from "./cartActions";
 import AuthStateDocument from "../documents/AuthStateDocument";
+import { resetAddressState } from "./addressActions";
 
 export const logIn = (authType, email, password, rememberMe) => {
 	console.log(authType, email, password, rememberMe);
@@ -63,6 +64,7 @@ export const logOut = () => {
 		logOutDispatcher(dispatch);
 		dispatch(resetCart());
 		dispatch(resetAmount());
+		dispatch(resetAddressState());
 	};
 };
 

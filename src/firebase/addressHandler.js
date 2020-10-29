@@ -2,7 +2,7 @@ import firebase from "../firebaseConfig";
 import sha256 from "crypto-js/sha256";
 import Base64 from "crypto-js/enc-base64";
 import AddressDocument from "../documents/AddressDocument";
-import { setAddressState } from "../actions/addressActions";
+import { setAddressStateFromList } from "../actions/addressActions";
 const db = firebase.firestore();
 
 export const createNewAddress = (authState, addressDoc) => {
@@ -68,7 +68,7 @@ export const getAddresses = (dispatch, userId) => {
 				addressDoc.pin = doc.data().pin;
 				addressList.push(addressDoc);
 			});
-			dispatch(setAddressState(addressList));
+			dispatch(setAddressStateFromList(addressList));
 		})
 		.catch(function (error) {
 			console.log("Error getting documents: ", error);
