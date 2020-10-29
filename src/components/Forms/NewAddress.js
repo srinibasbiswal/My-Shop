@@ -33,8 +33,10 @@ function NewAddress() {
 	});
 
 	return (
-		<div className={`uk-card uk-card-body uk-card-default`}>
-			<h3 className={`uk-card-title`}>Add a new address</h3>
+		<div
+			className={`uk-card uk-card-body uk-card-default uk-border-rounded`}
+		>
+			<h3 className={`uk-card-title`}>Add Delivery Address</h3>
 			<form
 				className={`uk-form-stacked uk-text-left`}
 				onSubmit={formik.handleSubmit}

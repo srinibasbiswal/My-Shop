@@ -25,6 +25,29 @@ class AddressDocument {
 		map["pin"] = this.pin;
 		return map;
 	}
+
+	toString() {
+		var addressString = "";
+		addressString =
+			this.name +
+			" , " +
+			this.phoneNumber +
+			" , " +
+			this.addr1 +
+			" , " +
+			this.addr2 +
+			" , " +
+			this.landmark +
+			" , " +
+			this.city +
+			" , " +
+			this.state +
+			" , " +
+			this.country +
+			" , " +
+			this.pin;
+		return addressString;
+	}
 }
 
 export default AddressDocument;
