@@ -6,6 +6,8 @@ export const actionTypes = {
 	CALCULATE_AMOUNT: "Calculate Amount",
 	RESET_AMOUNT: "Reset Amount",
 	ADD_ADDRESS: "Add Address",
+	SET_ADDRESS: "Set Address",
+	SET_MULTIPLE_ADDRESSES: "Set Multiple Addresses",
 	DELETE_ADDRESS: "Delete Address",
 	SELECT_ADDRESS: "Select Address",
 	CREATE_PO: "Create Purchase Order",

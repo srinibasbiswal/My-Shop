@@ -5,6 +5,7 @@ import UserDocument from "../documents/UserDocument";
 import { authTypes } from "../data/enums/authTypes";
 import CartStateDocument from "../documents/CartStateDocument";
 import { setCartDB } from "./cartHandler";
+import { getAddresses } from "./addressHandler";
 
 const db = firebase.firestore();
 
@@ -84,6 +85,7 @@ export const logInUsingEmail = (
 					cartStateDoc.itemCodes = cart.itemCodes;
 					cartStateDoc.itemMap = cart.itemMap;
 					setCartDB(user.user.uid, cartStateDoc);
+					getAddresses(dispatch, user.user.uid);
 
 					dispatch({
 						type: authResponses.LOG_IN_SUCCESS,
@@ -183,6 +185,7 @@ export const onSubmitOtp = (dispatch, cart, otp) => {
 			cartStateDoc.itemCodes = cart.itemCodes;
 			cartStateDoc.itemMap = cart.itemMap;
 			setCartDB(user.uid, cartStateDoc);
+			getAddresses(dispatch, user.uid);
 
 			dispatch({
 				type: authResponses.SIGN_UP_SUCCESS,

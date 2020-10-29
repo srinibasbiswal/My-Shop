@@ -13,7 +13,7 @@ export const createPurchaseOrder = () => {
 			type: actionTypes.CREATE_PO,
 			cart: store.getState().cart,
 			amount: store.getState().amount,
-			address: store.getState().address,
+			address: store.getState().address.selectedAddress,
 			authentication: store.getState().authentication,
 		};
 	} else {
