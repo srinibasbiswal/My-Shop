@@ -53,26 +53,6 @@
 
 /* Cart */
 
-.quantityControlBorder {
-	border-style: solid;
-	border-width: thin;
-	padding: 2px 5px;
-	border-radius: 5px;
-}
-
-.quantityControlList {
-	display: flex;
-	flex-wrap: wrap;
-	margin: 0;
-	list-style: none;
-}
-
-.quantityControl_SmallDevice {
-	right: 0 !important;
-	position: absolute !important;
-	max-width: 100%;
-}
-
 .removeItem_SmallDevice {
 	top: unset !important;
 }
@@ -89,15 +69,15 @@
 }
 
 /* Quantity Control */
+
 .quantityControl {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	width: fit-content;
 	margin: 0 auto;
-	background: #eaeaea;
-	border-radius: 10px;
-	padding: 1rem 0.4rem;
+	padding: 0.6rem 0.4rem;
+	background: var(--white) !important;
 }
 
 .quantityBtn {
@@ -108,10 +88,7 @@
 	padding: 0px 8px;
 	cursor: pointer;
 }
-.quantityBtn svg {
-	width: 15px;
-	height: 15px;
-}
+
 .quantityInput {
 	outline: none;
 	user-select: none;
@@ -123,6 +100,7 @@
 	background: transparent;
 	border: none;
 }
+
 .quantityInput::-webkit-inner-spin-button,
 .quantityInput::-webkit-outer-spin-button {
 	-webkit-appearance: none;
