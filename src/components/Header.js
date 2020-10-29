@@ -90,7 +90,7 @@ function Header(props) {
 
 							<li className={`uk-navbar-item`}>
 								<FiUser
-									className={`${styles.textColorWhite} ${styles.iconSize}`}
+									className={`${styles.textColorWhite} ${styles.iconSize} uk-link`}
 								/>
 								<div
 									uk-dropdown="mode: click"
@@ -109,7 +109,9 @@ function Header(props) {
 																}
 															</p>
 														</li>
-														<li class="uk-nav-header">
+														<li
+															className={`uk-nav-header uk-button uk-button-text`}
+														>
 															<a
 																onClick={(e) =>
 																	logOutAccount(
@@ -128,7 +130,9 @@ function Header(props) {
 											} else {
 												return (
 													<React.Fragment>
-														<li class="uk-nav-header">
+														<li
+															className={`uk-nav-header uk-button-text`}
+														>
 															<Link to="/signup">
 																<FiUserCheck
 																	className={` ${styles.iconSize}`}
@@ -137,7 +141,9 @@ function Header(props) {
 															</Link>
 														</li>
 
-														<li class="uk-nav-header">
+														<li
+															className={`uk-nav-header uk-button-text`}
+														>
 															<Link to="/signup">
 																<FiUserPlus
 																	className={` ${styles.iconSize}`}
@@ -155,7 +161,7 @@ function Header(props) {
 							<li className={`uk-navbar-item`}>
 								<FiMenu
 									uk-toggle="target: #menuOverlay"
-									className={`${styles.textColorWhite} ${styles.iconSize}`}
+									className={`${styles.textColorWhite} ${styles.iconSize} uk-link`}
 								/>
 							</li>
 						</ul>
