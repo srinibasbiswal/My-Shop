@@ -40,6 +40,11 @@
 	box-shadow: none;
 }
 
+.secondaryButton {
+	background: var(--white) !important;
+	color: var(--black) !important;
+}
+
 /* Header */
 
 .searchBarSmall {
