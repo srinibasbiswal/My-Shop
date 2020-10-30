@@ -23,11 +23,11 @@
 
 .buttonGradient {
 	color: var(--white) !important;
-	background: rgb(30, 134, 255) !important;
+	background: var(--primary) !important;
 	background: linear-gradient(
 		90deg,
-		rgba(30, 134, 255, 1) 0%,
-		rgba(57, 89, 162, 1) 100%
+		var(--primary) 0%,
+		var(--primaryDark) 100%
 	) !important;
 	border: 2px solid var(--primaryDark);
 	-webkit-box-shadow: 0 2px var(--primaryDark);
