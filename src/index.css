@@ -21,3 +21,12 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
 }
+
+.switcherParent > .uk-active {
+	color: var(--black) !important;
+	background: var(--white) !important;
+	border: 2px solid var(--primaryDark);
+	-webkit-box-shadow: 0 2px var(--primaryDark);
+	-moz-box-shadow: 0 2px var(--primaryDark);
+	box-shadow: 0 2px var(--primaryDark);
+}
