@@ -6,9 +6,9 @@ import { FiCheckSquare } from "react-icons/fi";
 
 function AddressSlider(props) {
 	const dispatch = useDispatch();
-	const onSelectAddress = (e) => {
-		console.log(e.target.value);
-		dispatch(setAddress(e.target.value));
+	const onSelectAddress = (address) => {
+		console.log(address);
+		dispatch(setAddress(address));
 	};
 
 	return (
@@ -19,24 +19,27 @@ function AddressSlider(props) {
 				uk-grid={`true`}
 				uk-height-match={`true`}
 			>
-				<div>
-					<div
-						className={`uk-card uk-card-default uk-padding-small uk-border-rounded ${styles.buttonGradient}`}
-					>
-						<div
-							class="uk-alert-success uk-border-rounded"
-							uk-alert={`true`}
-						>
-							<FiCheckSquare />
-							<span> Selected</span>
-						</div>
-						{props.selectedAddress.toString()}
-					</div>
-				</div>
 				{props.addressList.map((address, index) => {
-					if (props.selectedAddress.id !== address.id) {
+					if (props.selectedAddress.id === address.id) {
 						return (
 							<div>
+								<div
+									className={`uk-card uk-card-default uk-padding-small uk-border-rounded ${styles.buttonGradient}`}
+								>
+									<div
+										class="uk-alert-success uk-border-rounded"
+										uk-alert={`true`}
+									>
+										<FiCheckSquare />
+										<span> Selected</span>
+									</div>
+									{props.selectedAddress.toString()}
+								</div>
+							</div>
+						);
+					} else {
+						return (
+							<div onClick={() => onSelectAddress(address)}>
 								<div
 									className={`uk-card uk-card-default uk-padding-small uk-border-rounded ${styles.buttonGradient} ${styles.secondaryButton}`}
 								>

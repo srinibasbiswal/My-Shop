@@ -9,6 +9,8 @@ const addressReducer = (state = initialAddressState, action) => {
 		case actionTypes.SET_ADDRESS:
 			if (action.address !== undefined) {
 				var addressDoc = new AddressDocument();
+				addressDoc.id =
+					action.address.id !== undefined ? action.address.id : "";
 				addressDoc.name =
 					action.address.name !== undefined
 						? action.address.name
