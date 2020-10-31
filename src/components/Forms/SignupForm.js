@@ -17,9 +17,11 @@ function SignUpForm() {
 			password: "",
 			phoneNumber: "",
 			otp: "",
+			countryCode: 91,
 			authType: authType,
 		},
 		onSubmit: (values) => {
+			console.log(values);
 			dispatch(
 				signUp(
 					values.authType,
@@ -38,7 +40,10 @@ function SignUpForm() {
 	};
 
 	const submitPhoneNumber = (e) => {
-		formik.values.phoneNumber = formik.values.phoneNumber.toString();
+		formik.values.phoneNumber =
+			"+" +
+			formik.values.countryCode +
+			formik.values.phoneNumber.toString();
 		formik.values.otp = "";
 		formik.handleSubmit(e);
 	};
@@ -170,24 +175,47 @@ function SignUpForm() {
 								className={`uk-form-stacked uk-text-left`}
 								onSubmit={(e) => submitPhoneNumber(e)}
 							>
-								<div className={`uk-margin uk-width-1-1`}>
-									<label
-										className={`uk-form-label uk-text-bold`}
-										htmlFor="phoneNumber"
-									>
-										Phone Number
-									</label>
-									<div className={`uk-form-controls`}>
-										<input
-											className={`uk-input uk-border-rounded`}
-											placeholder="10-digit mobile number without prefixes"
-											id="phoneNumber"
-											name="phoneNumber"
-											type="number"
-											onChange={formik.handleChange}
-											value={formik.values.phoneNumber}
-											required
-										/>
+								<div
+									className={`uk-grid-small`}
+									uk-grid={`true`}
+								>
+									<div className={`uk-width-1-4`}>
+										<label
+											className={`uk-form-label uk-text-bold`}
+											for="form-stacked-select"
+										>
+											Country Code
+										</label>
+										<div className={`uk-form-controls`}>
+											<select
+												className={`uk-select uk-border-rounded`}
+												required
+											>
+												<option>(IND) + 91 </option>
+											</select>
+										</div>
+									</div>
+									<div className={`uk-width-3-4`}>
+										<label
+											className={`uk-form-label uk-text-bold`}
+											htmlFor="phoneNumber"
+										>
+											Phone Number
+										</label>
+										<div className={`uk-form-controls`}>
+											<input
+												className={`uk-input uk-border-rounded`}
+												placeholder="10-digit mobile number without prefixes"
+												id="phoneNumber"
+												name="phoneNumber"
+												type="number"
+												onChange={formik.handleChange}
+												value={
+													formik.values.phoneNumber
+												}
+												required
+											/>
+										</div>
 									</div>
 								</div>
 								<div id="recaptcha-container"></div>

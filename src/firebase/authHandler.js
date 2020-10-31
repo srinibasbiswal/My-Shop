@@ -124,7 +124,7 @@ export const createOrLogInUserUsingPhone = (
 	let appVerifier = window.recaptchaVerifier;
 	firebase
 		.auth()
-		.signInWithPhoneNumber("+" + phoneNumber.toString(), appVerifier)
+		.signInWithPhoneNumber(phoneNumber.toString(), appVerifier)
 		.then(function (confirmationResult) {
 			window.confirmationResult = confirmationResult;
 			console.log("OTP is sent");
