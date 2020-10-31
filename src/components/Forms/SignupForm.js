@@ -3,12 +3,13 @@ import { useFormik } from "formik";
 import { signUp } from "../../actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { authTypes } from "../../data/enums/authTypes";
+import styles from "../../stylesheets/style.module.css";
 
-function SignupForm() {
+function SignUpForm() {
 	const dispatch = useDispatch();
 	const authentication = useSelector((state) => state.authentication);
 
-	const [authType, setAuthType] = useState(authTypes.EMAIL);
+	const [authType, setAuthType] = useState(authTypes.PHONE);
 
 	const formik = useFormik({
 		initialValues: {
@@ -49,7 +50,7 @@ function SignupForm() {
 
 	if (authType === authTypes.EMAIL) {
 		return (
-			<div className={`uk-card uk-card-body uk-card-default`}>
+			<div className={`uk-card uk-card-body`}>
 				<form
 					className={`uk-form-stacked uk-text-left`}
 					onSubmit={formik.handleSubmit}
@@ -70,6 +71,7 @@ function SignupForm() {
 								type="email"
 								onChange={formik.handleChange}
 								value={formik.values.email}
+								required
 							/>
 						</div>
 					</div>
@@ -89,6 +91,7 @@ function SignupForm() {
 								type="password"
 								onChange={formik.handleChange}
 								value={formik.values.password}
+								required
 							/>
 						</div>
 
@@ -136,7 +139,7 @@ function SignupForm() {
 							className={`uk-margin uk-width-1-1 uk-text-center`}
 						>
 							<button
-								className={`uk-button uk-button-primary uk-border-rounded`}
+								className={`uk-button uk-border-rounded ${styles.buttonGradient}`}
 								type="submit"
 							>
 								Sign Up
@@ -144,15 +147,14 @@ function SignupForm() {
 						</div>
 					</div>
 				</form>
-				<hr />
 				<div>
-					<p>Or Sign Up Using</p>
+					<p className={`uk-text-bold`}>OR</p>
 					<div>
 						<button
-							className={`uk-button uk-button-primary uk-margin-small-right`}
+							className={`uk-button uk-border-rounded ${styles.buttonGradient} ${styles.secondaryButton}`}
 							onClick={() => setAuthTypeState(authTypes.PHONE)}
 						>
-							Phone Number
+							Sign Up Using Phone Number
 						</button>
 					</div>
 				</div>
@@ -160,7 +162,7 @@ function SignupForm() {
 		);
 	} else if (authType === authTypes.PHONE) {
 		return (
-			<div className={`uk-card uk-card-body uk-card-default`}>
+			<div className={`uk-card uk-card-body`}>
 				{(() => {
 					if (!authentication.isOTPSent) {
 						return (
@@ -178,12 +180,13 @@ function SignupForm() {
 									<div className={`uk-form-controls`}>
 										<input
 											className={`uk-input uk-border-rounded`}
-											placeholder="Phone Number"
+											placeholder="10-digit mobile number without prefixes"
 											id="phoneNumber"
 											name="phoneNumber"
 											type="number"
 											onChange={formik.handleChange}
 											value={formik.values.phoneNumber}
+											required
 										/>
 									</div>
 								</div>
@@ -234,7 +237,7 @@ function SignupForm() {
 									className={`uk-margin uk-width-1-1 uk-text-center`}
 								>
 									<button
-										className={`uk-button uk-button-primary uk-border-rounded`}
+										className={`uk-button uk-border-rounded ${styles.buttonGradient}`}
 										type="submit"
 									>
 										Sign Up
@@ -258,12 +261,13 @@ function SignupForm() {
 									<div className={`uk-form-controls`}>
 										<input
 											className={`uk-input uk-border-rounded`}
-											placeholder="otp"
+											placeholder="Enter 6 digit OTP sent to you phone number"
 											id="otp"
 											name="otp"
 											type="number"
 											onChange={formik.handleChange}
 											value={formik.values.otp}
+											required
 										/>
 									</div>
 								</div>
@@ -313,26 +317,24 @@ function SignupForm() {
 									className={`uk-margin uk-width-1-1 uk-text-center`}
 								>
 									<button
-										className={`uk-button uk-button-primary uk-border-rounded`}
+										className={`uk-button uk-border-rounded ${styles.buttonGradient}`}
 										type="submit"
 									>
-										Sign Up
+										Submit OTP
 									</button>
 								</div>
 							</form>
 						);
 					}
 				})()}
-
-				<hr />
 				<div>
-					<p>Or Sign Up Using</p>
+					<p className={`uk-text-bold`}>OR</p>
 					<div>
 						<button
-							className={`uk-button uk-button-primary uk-margin-small-right`}
+							className={`uk-button uk-border-rounded ${styles.buttonGradient} ${styles.secondaryButton}`}
 							onClick={() => setAuthTypeState(authTypes.EMAIL)}
 						>
-							Email
+							Sign Up Using Email
 						</button>
 					</div>
 				</div>
@@ -341,4 +343,4 @@ function SignupForm() {
 	}
 }
 
-export default SignupForm;
+export default SignUpForm;
