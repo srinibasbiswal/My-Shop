@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SignUpForm from "./Forms/SignUpForm";
 import LogInForm from "./Forms/LogInForm";
 import styles from "../stylesheets/style.module.css";
 
 function AuthenticationForm() {
+	const [pathName, setPathName] = useState("SIGNUP");
+	useEffect(() => {
+		if (window.location.pathname === "/signup") {
+			setPathName("SIGNUP");
+		} else {
+			setPathName("LOGIN");
+		}
+	}, [window.location.pathname]);
 	return (
 		<div
 			className={`uk-card uk-card-default uk-card-body uk-width-1-2@m uk-text-center uk-border-rounded ${styles.customShadow}`}
@@ -16,22 +24,46 @@ function AuthenticationForm() {
 					class="uk-button uk-button-default uk-margin-medium-right uk-border-rounded  uk-width-1-1@s uk-width-1-3@m uk-margin-small-bottom"
 					type="button"
 				>
-					Sign Up
+					{(() => {
+						if (pathName === "SIGNUP") {
+							return "Sign Up";
+						} else {
+							return "Log In";
+						}
+					})()}
 				</button>
 				<button
 					class="uk-button uk-button-default uk-margin-medium-right uk-border-rounded  uk-width-1-1@s uk-width-1-3@m uk-margin-small-bottom"
 					type="button"
 				>
-					Log In
+					{(() => {
+						if (pathName === "SIGNUP") {
+							return "Log In";
+						} else {
+							return "Sign Up";
+						}
+					})()}
 				</button>
 			</div>
 
 			<ul class="uk-switcher uk-margin">
 				<li>
-					<SignUpForm />
+					{(() => {
+						if (pathName === "SIGNUP") {
+							return <SignUpForm />;
+						} else {
+							return <LogInForm />;
+						}
+					})()}
 				</li>
 				<li>
-					<LogInForm />
+					{(() => {
+						if (pathName === "SIGNUP") {
+							return <LogInForm />;
+						} else {
+							return <SignUpForm />;
+						}
+					})()}
 				</li>
 			</ul>
 		</div>

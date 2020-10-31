@@ -133,7 +133,7 @@ function Header(props) {
 														<li
 															className={`uk-nav-header uk-button-text`}
 														>
-															<Link to="/signup">
+															<Link to="/login">
 																<FiUserCheck
 																	className={` ${styles.iconSize}`}
 																/>{" "}

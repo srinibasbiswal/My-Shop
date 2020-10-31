@@ -6,7 +6,6 @@ import CheckoutPage from "../pages/CheckoutPage";
 import HomePage from "../pages/HomePage";
 import ProductPage from "../pages/ProductPage";
 import ResultPage from "../pages/ResultPage";
-import SignUpPage from "../pages/SignUpPage";
 
 function Routes() {
 	return (
@@ -22,6 +21,7 @@ function Routes() {
 			<Route path="/cart" exact component={CartPage} />
 			<Route path="/checkout" exact component={CheckoutPage} />
 			<Route path="/signup" exact component={AuthenticationPage} />
+			<Route path="/login" exact component={AuthenticationPage} />
 			{/* TODO : Add route for 404 page */}
 		</Switch>
 	);
