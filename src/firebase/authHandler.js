@@ -212,12 +212,21 @@ export const onSubmitOtp = (dispatch, actionLogIn, cart, otp) => {
 			});
 		})
 		.catch(function (error) {
-			signupAuthState.isSignUpError = true;
-			signupAuthState.errorMessage = error.message;
-			dispatch({
-				type: authResponses.SIGN_UP_ERROR,
-				authState: signupAuthState,
-			});
+			if (actionLogIn) {
+				signupAuthState.isLogInError = true;
+				signupAuthState.errorMessage = error.message;
+				dispatch({
+					type: authResponses.LOG_IN_ERROR,
+					authState: signupAuthState,
+				});
+			} else {
+				signupAuthState.isSignUpError = true;
+				signupAuthState.errorMessage = error.message;
+				dispatch({
+					type: authResponses.SIGN_UP_ERROR,
+					authState: signupAuthState,
+				});
+			}
 		});
 };
 
