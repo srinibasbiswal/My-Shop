@@ -4,7 +4,7 @@ import store from "../store";
 import {
 	createUserUsingEmail,
 	logInUsingEmail,
-	createUserUsingPhone,
+	createOrLogInUserUsingPhone,
 	onSubmitOtp,
 	logOutDispatcher,
 } from "../firebase/authHandler";
@@ -13,7 +13,14 @@ import { resetCart } from "./cartActions";
 import AuthStateDocument from "../documents/AuthStateDocument";
 import { resetAddressState } from "./addressActions";
 
-export const logIn = (authType, email, password, rememberMe) => {
+export const logIn = (
+	authType,
+	email,
+	password,
+	phoneNumber,
+	otp,
+	rememberMe
+) => {
 	console.log(authType, email, password, rememberMe);
 	return (dispatch) => {
 		switch (authType) {
@@ -25,6 +32,14 @@ export const logIn = (authType, email, password, rememberMe) => {
 					password,
 					rememberMe
 				);
+				break;
+
+			case authTypes.PHONE:
+				if (otp === undefined || otp === "") {
+					createOrLogInUserUsingPhone(dispatch, true, phoneNumber);
+				} else {
+					onSubmitOtp(dispatch, true, store.getState().cart, otp);
+				}
 				break;
 
 			default:
@@ -47,9 +62,9 @@ export const signUp = (authType, email, password, phoneNumber, otp) => {
 
 			case authTypes.PHONE:
 				if (otp === undefined || otp === "") {
-					createUserUsingPhone(dispatch, phoneNumber);
+					createOrLogInUserUsingPhone(dispatch, false, phoneNumber);
 				} else {
-					onSubmitOtp(dispatch, store.getState().cart, otp);
+					onSubmitOtp(dispatch, false, store.getState().cart, otp);
 				}
 				break;
 

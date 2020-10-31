@@ -112,7 +112,11 @@ export const logInUsingEmail = (
 		});
 };
 
-export const createUserUsingPhone = (dispatch, phoneNumber) => {
+export const createOrLogInUserUsingPhone = (
+	dispatch,
+	actionLogIn,
+	phoneNumber
+) => {
 	console.log("inside authaction phoneNumber : " + phoneNumber);
 	var signupAuthState = new AuthStateDocument();
 	console.log(phoneNumber);
@@ -131,17 +135,30 @@ export const createUserUsingPhone = (dispatch, phoneNumber) => {
 			});
 		})
 		.catch(function (error) {
-			signupAuthState.isSignUpError = true;
-			if (error.code === "auth/invalid-phone-number")
-				signupAuthState.errorMessage = "Invalid Phone Number";
-			else {
-				signupAuthState.errorMessage = error.message;
+			if (actionLogIn) {
+				signupAuthState.isLogInError = true;
+				if (error.code === "auth/invalid-phone-number")
+					signupAuthState.errorMessage = "Invalid Phone Number";
+				else {
+					signupAuthState.errorMessage = error.message;
+				}
+				dispatch({
+					type: authResponses.LOG_IN_ERROR,
+					authState: signupAuthState,
+				});
+			} else {
+				signupAuthState.isSignUpError = true;
+				if (error.code === "auth/invalid-phone-number")
+					signupAuthState.errorMessage = "Invalid Phone Number";
+				else {
+					signupAuthState.errorMessage = error.message;
+				}
+				console.log(error);
+				dispatch({
+					type: authResponses.SIGN_UP_ERROR,
+					authState: signupAuthState,
+				});
 			}
-			console.log(error);
-			dispatch({
-				type: authResponses.SIGN_UP_ERROR,
-				authState: signupAuthState,
-			});
 		});
 };
 
@@ -152,14 +169,14 @@ const setUpRecaptcha = () => {
 			size: "invisible",
 			callback: function (response) {
 				console.log("Captcha Resolved");
-				createUserUsingPhone();
+				createOrLogInUserUsingPhone();
 			},
 			defaultCountry: "IN",
 		}
 	);
 };
 
-export const onSubmitOtp = (dispatch, cart, otp) => {
+export const onSubmitOtp = (dispatch, actionLogIn, cart, otp) => {
 	var signupAuthState = new AuthStateDocument();
 	let otpInput = otp.toString();
 	let optConfirm = window.confirmationResult;
@@ -173,12 +190,14 @@ export const onSubmitOtp = (dispatch, cart, otp) => {
 			signupAuthState.isLoggedIn = true;
 			signupAuthState.isVerified = true;
 
-			var userDoc = new UserDocument();
-			userDoc.userName = user.phoneNumber;
-			userDoc.phoneNumber = user.phoneNumber;
-			userDoc.authType = authTypes.PHONE;
-			userDoc.isVerified = true;
-			createNewUser(dispatch, user.uid, userDoc);
+			if (!actionLogIn) {
+				var userDoc = new UserDocument();
+				userDoc.userName = user.phoneNumber;
+				userDoc.phoneNumber = user.phoneNumber;
+				userDoc.authType = authTypes.PHONE;
+				userDoc.isVerified = true;
+				createNewUser(dispatch, user.uid, userDoc);
+			}
 
 			var cartStateDoc = new CartStateDocument();
 			cartStateDoc.numberOfItems = cart.numberOfItems;
