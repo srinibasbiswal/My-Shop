@@ -1,10 +1,13 @@
 import React from "react";
 import SignUpForm from "./Forms/SignUpForm";
 import LogInForm from "./Forms/LogInForm";
+import styles from "../stylesheets/style.module.css";
 
 function AuthenticationForm() {
 	return (
-		<div className={`uk-card uk-card-default uk-card-body uk-width-1-2@m`}>
+		<div
+			className={`uk-card uk-card-default uk-card-body uk-width-1-2@m uk-text-center uk-border-rounded ${styles.customShadow}`}
+		>
 			<div
 				className={`switcherParent`}
 				uk-switcher="animation: uk-animation-fade; toggle: > *"
