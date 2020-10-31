@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import AuthenticationPage from "../pages/AuthenticationPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import HomePage from "../pages/HomePage";
@@ -20,7 +21,7 @@ function Routes() {
 			<Route path="/product/:id" exact component={ProductPage} />
 			<Route path="/cart" exact component={CartPage} />
 			<Route path="/checkout" exact component={CheckoutPage} />
-			<Route path="/signup" exact component={SignUpPage} />
+			<Route path="/signup" exact component={AuthenticationPage} />
 			{/* TODO : Add route for 404 page */}
 		</Switch>
 	);
