@@ -1,11 +1,11 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import AuthenticationPage from "../pages/AuthenticationPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import HomePage from "../pages/HomePage";
 import ProductPage from "../pages/ProductPage";
 import ResultPage from "../pages/ResultPage";
-import SignUpPage from "../pages/SignUpPage";
 
 function Routes() {
 	return (
@@ -20,7 +20,8 @@ function Routes() {
 			<Route path="/product/:id" exact component={ProductPage} />
 			<Route path="/cart" exact component={CartPage} />
 			<Route path="/checkout" exact component={CheckoutPage} />
-			<Route path="/signup" exact component={SignUpPage} />
+			<Route path="/signup" exact component={AuthenticationPage} />
+			<Route path="/login" exact component={AuthenticationPage} />
 			{/* TODO : Add route for 404 page */}
 		</Switch>
 	);

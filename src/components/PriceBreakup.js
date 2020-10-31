@@ -3,6 +3,7 @@ import styles from "../stylesheets/style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import { generatePO } from "../actions/purchaseOrderActions";
+import { FiBook, FiXSquare } from "react-icons/fi";
 
 function PriceBreakup(props) {
 	const amount = useSelector((state) => state.amount);
@@ -102,7 +103,7 @@ function PriceBreakup(props) {
 							</tbody>
 						</table>
 						<button
-							className={`uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom`}
+							className={`uk-button uk-width-1-1 uk-margin-small-bottom uk-border-rounded ${styles.buttonGradient}`}
 							onClick={() => movetoAddAddress()}
 						>
 							Place Order
@@ -128,17 +129,16 @@ function PriceBreakup(props) {
 								<p
 									className={`uk-text-meta showPriceBreakup uk-margin-remove-top `}
 								>
-									See price breakup
+									See price breakup <FiBook />
 								</p>
 								<div className={`uk-accordion-content`}>
 									<button
-										className={`showPriceBreakup uk-button uk-button-default`}
+										className={`showPriceBreakup uk-button uk-button-default uk-border-rounded`}
 									>
-										Close Price Breakup{" "}
-										<span
-											className={`uk-margin-small-right`}
-											uk-icon="close"
-										></span>
+										Hide Price Breakup{" "}
+										<FiXSquare
+											className={styles.iconSize}
+										/>
 									</button>
 									<table className={`uk-table`}>
 										<tbody className={`uk-text-bold`}>
@@ -178,7 +178,8 @@ function PriceBreakup(props) {
 						</ul>
 
 						<button
-							className={`uk-button uk-button-primary uk-width-1-1`}
+							className={`uk-button uk-width-1-1 uk-border-rounded ${styles.buttonGradient}`}
+							onClick={() => movetoAddAddress()}
 						>
 							Place Order
 						</button>

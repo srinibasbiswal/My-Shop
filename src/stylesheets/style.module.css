@@ -1,10 +1,4 @@
 /* Generic */
-:root {
-	--primary: #1e87f0;
-	--white: #ffffff;
-	--black: #000000;
-	--greyDark: #9baacf;
-}
 
 .textColorWhite {
 	color: var(--white) !important;
@@ -18,32 +12,55 @@
 	background-color: var(--primary) !important;
 }
 
+.iconSize {
+	font-size: 1.25rem !important;
+}
+
+.productImg {
+	height: 150px !important;
+	width: 150px !important;
+}
+
+.buttonGradient {
+	color: var(--white) !important;
+	background: var(--primary) !important;
+	background: linear-gradient(
+		90deg,
+		var(--primary) 0%,
+		var(--primaryDark) 100%
+	) !important;
+	border: 2px solid var(--primaryDark);
+	-webkit-box-shadow: 0 2px var(--primaryDark);
+	-moz-box-shadow: 0 2px var(--primaryDark);
+	box-shadow: 0 2px var(--primaryDark);
+}
+
+.buttonGradient:active {
+	transform: translateY(2px);
+	box-shadow: none;
+}
+
+.secondaryButton {
+	background: var(--white) !important;
+	color: var(--black) !important;
+}
+
+.customShadow {
+	box-shadow: 0 1px 2px 0 var(--primary) !important;
+}
+
+/* Header */
+
+.searchBarSmall {
+	padding: 10px 10px !important;
+}
+
 /* Footer */
 .FooterLink {
 	min-height: 30px !important;
 }
 
 /* Cart */
-
-.quantityControlBorder {
-	border-style: solid;
-	border-width: thin;
-	padding: 2px 5px;
-	border-radius: 5px;
-}
-
-.quantityControlList {
-	display: flex;
-	flex-wrap: wrap;
-	margin: 0;
-	list-style: none;
-}
-
-.quantityControl_SmallDevice {
-	right: 0 !important;
-	position: absolute !important;
-	max-width: 100%;
-}
 
 .removeItem_SmallDevice {
 	top: unset !important;
@@ -61,15 +78,15 @@
 }
 
 /* Quantity Control */
+
 .quantityControl {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	width: fit-content;
 	margin: 0 auto;
-	background: #eaeaea;
-	border-radius: 10px;
-	padding: 1rem 0.4rem;
+	padding: 0.6rem 0.4rem;
+	background: var(--white) !important;
 }
 
 .quantityBtn {
@@ -80,10 +97,7 @@
 	padding: 0px 8px;
 	cursor: pointer;
 }
-.quantityBtn svg {
-	width: 15px;
-	height: 15px;
-}
+
 .quantityInput {
 	outline: none;
 	user-select: none;
@@ -95,6 +109,7 @@
 	background: transparent;
 	border: none;
 }
+
 .quantityInput::-webkit-inner-spin-button,
 .quantityInput::-webkit-outer-spin-button {
 	-webkit-appearance: none;

@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import AddressDocument from "../../documents/AddressDocument";
 import { addAddress } from "../../actions/addressActions";
 import { useDispatch } from "react-redux";
+import styles from "../../stylesheets/style.module.css";
+import { FiMapPin } from "react-icons/fi";
 
 function NewAddress() {
 	const dispatch = useDispatch();
@@ -33,8 +35,10 @@ function NewAddress() {
 	});
 
 	return (
-		<div className={`uk-card uk-card-body uk-card-default`}>
-			<h3 className={`uk-card-title`}>Add a new address</h3>
+		<div
+			className={`uk-card uk-card-body uk-card-default uk-border-rounded`}
+		>
+			<h3 className={`uk-card-title`}>Add Delivery Address</h3>
 			<form
 				className={`uk-form-stacked uk-text-left`}
 				onSubmit={formik.handleSubmit}
@@ -213,9 +217,9 @@ function NewAddress() {
 				</div>
 				<div className={`uk-margin uk-width-1-1 uk-text-center`}>
 					<button
-						className={`uk-button uk-button-primary uk-border-rounded`}
+						className={`uk-button uk-button-primary uk-border-rounded ${styles.buttonGradient}`}
 					>
-						Place Order
+						Add Address <FiMapPin className={styles.iconSize} />
 					</button>
 				</div>
 			</form>

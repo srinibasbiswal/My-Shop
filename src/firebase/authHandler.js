@@ -5,6 +5,7 @@ import UserDocument from "../documents/UserDocument";
 import { authTypes } from "../data/enums/authTypes";
 import CartStateDocument from "../documents/CartStateDocument";
 import { setCartDB } from "./cartHandler";
+import { getAddresses } from "./addressHandler";
 
 const db = firebase.firestore();
 
@@ -84,6 +85,7 @@ export const logInUsingEmail = (
 					cartStateDoc.itemCodes = cart.itemCodes;
 					cartStateDoc.itemMap = cart.itemMap;
 					setCartDB(user.user.uid, cartStateDoc);
+					getAddresses(dispatch, user.user.uid);
 
 					dispatch({
 						type: authResponses.LOG_IN_SUCCESS,
@@ -110,7 +112,11 @@ export const logInUsingEmail = (
 		});
 };
 
-export const createUserUsingPhone = (dispatch, phoneNumber) => {
+export const createOrLogInUserUsingPhone = (
+	dispatch,
+	actionLogIn,
+	phoneNumber
+) => {
 	console.log("inside authaction phoneNumber : " + phoneNumber);
 	var signupAuthState = new AuthStateDocument();
 	console.log(phoneNumber);
@@ -118,7 +124,7 @@ export const createUserUsingPhone = (dispatch, phoneNumber) => {
 	let appVerifier = window.recaptchaVerifier;
 	firebase
 		.auth()
-		.signInWithPhoneNumber("+" + phoneNumber.toString(), appVerifier)
+		.signInWithPhoneNumber(phoneNumber.toString(), appVerifier)
 		.then(function (confirmationResult) {
 			window.confirmationResult = confirmationResult;
 			console.log("OTP is sent");
@@ -129,17 +135,30 @@ export const createUserUsingPhone = (dispatch, phoneNumber) => {
 			});
 		})
 		.catch(function (error) {
-			signupAuthState.isSignUpError = true;
-			if (error.code === "auth/invalid-phone-number")
-				signupAuthState.errorMessage = "Invalid Phone Number";
-			else {
-				signupAuthState.errorMessage = error.message;
+			if (actionLogIn) {
+				signupAuthState.isLogInError = true;
+				if (error.code === "auth/invalid-phone-number")
+					signupAuthState.errorMessage = "Invalid Phone Number";
+				else {
+					signupAuthState.errorMessage = error.message;
+				}
+				dispatch({
+					type: authResponses.LOG_IN_ERROR,
+					authState: signupAuthState,
+				});
+			} else {
+				signupAuthState.isSignUpError = true;
+				if (error.code === "auth/invalid-phone-number")
+					signupAuthState.errorMessage = "Invalid Phone Number";
+				else {
+					signupAuthState.errorMessage = error.message;
+				}
+				console.log(error);
+				dispatch({
+					type: authResponses.SIGN_UP_ERROR,
+					authState: signupAuthState,
+				});
 			}
-			console.log(error);
-			dispatch({
-				type: authResponses.SIGN_UP_ERROR,
-				authState: signupAuthState,
-			});
 		});
 };
 
@@ -150,14 +169,14 @@ const setUpRecaptcha = () => {
 			size: "invisible",
 			callback: function (response) {
 				console.log("Captcha Resolved");
-				createUserUsingPhone();
+				createOrLogInUserUsingPhone();
 			},
 			defaultCountry: "IN",
 		}
 	);
 };
 
-export const onSubmitOtp = (dispatch, cart, otp) => {
+export const onSubmitOtp = (dispatch, actionLogIn, cart, otp) => {
 	var signupAuthState = new AuthStateDocument();
 	let otpInput = otp.toString();
 	let optConfirm = window.confirmationResult;
@@ -171,18 +190,21 @@ export const onSubmitOtp = (dispatch, cart, otp) => {
 			signupAuthState.isLoggedIn = true;
 			signupAuthState.isVerified = true;
 
-			var userDoc = new UserDocument();
-			userDoc.userName = user.phoneNumber;
-			userDoc.phoneNumber = user.phoneNumber;
-			userDoc.authType = authTypes.PHONE;
-			userDoc.isVerified = true;
-			createNewUser(dispatch, user.uid, userDoc);
+			if (!actionLogIn) {
+				var userDoc = new UserDocument();
+				userDoc.userName = user.phoneNumber;
+				userDoc.phoneNumber = user.phoneNumber;
+				userDoc.authType = authTypes.PHONE;
+				userDoc.isVerified = true;
+				createNewUser(dispatch, user.uid, userDoc);
+			}
 
 			var cartStateDoc = new CartStateDocument();
 			cartStateDoc.numberOfItems = cart.numberOfItems;
 			cartStateDoc.itemCodes = cart.itemCodes;
 			cartStateDoc.itemMap = cart.itemMap;
 			setCartDB(user.uid, cartStateDoc);
+			getAddresses(dispatch, user.uid);
 
 			dispatch({
 				type: authResponses.SIGN_UP_SUCCESS,
@@ -190,12 +212,21 @@ export const onSubmitOtp = (dispatch, cart, otp) => {
 			});
 		})
 		.catch(function (error) {
-			signupAuthState.isSignUpError = true;
-			signupAuthState.errorMessage = error.message;
-			dispatch({
-				type: authResponses.SIGN_UP_ERROR,
-				authState: signupAuthState,
-			});
+			if (actionLogIn) {
+				signupAuthState.isLogInError = true;
+				signupAuthState.errorMessage = error.message;
+				dispatch({
+					type: authResponses.LOG_IN_ERROR,
+					authState: signupAuthState,
+				});
+			} else {
+				signupAuthState.isSignUpError = true;
+				signupAuthState.errorMessage = error.message;
+				dispatch({
+					type: authResponses.SIGN_UP_ERROR,
+					authState: signupAuthState,
+				});
+			}
 		});
 };
 

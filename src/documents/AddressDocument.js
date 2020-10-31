@@ -1,5 +1,6 @@
 class AddressDocument {
 	constructor() {
+		this.id = "";
 		this.name = "";
 		this.phoneNumber = "";
 		this.addr1 = "";
@@ -21,8 +22,31 @@ class AddressDocument {
 		map["city"] = this.city;
 		map["state"] = this.state;
 		map["country"] = this.country;
-		map["stapinte"] = this.pin;
+		map["pin"] = this.pin;
 		return map;
+	}
+
+	toString() {
+		var addressString = "";
+		addressString =
+			this.name +
+			" , " +
+			this.phoneNumber +
+			" , " +
+			this.addr1 +
+			" , " +
+			this.addr2 +
+			" , " +
+			this.landmark +
+			" , " +
+			this.city +
+			" , " +
+			this.state +
+			" , " +
+			this.country +
+			" , " +
+			this.pin;
+		return addressString;
 	}
 }
 

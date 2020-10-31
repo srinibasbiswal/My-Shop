@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import QuantityControl from "./QuantityControl";
 import { useDispatch, useSelector } from "react-redux";
 import { addAndCalculateItem } from "../actions/cartActions";
+import { FiShoppingCart } from "react-icons/fi";
 
 /*
 @Parameters
@@ -26,18 +27,18 @@ function ProductCard(props) {
 	if (props !== undefined) {
 		return (
 			<div className={`uk-card uk-card-default uk-border-rounded`}>
-				<div className={`uk-card-media-top `}>
+				<div className={`uk-card-media-top uk-text-center`}>
 					<img
 						src={props.primaryImageCode}
 						alt={props.productName}
-						className={`uk-border-rounded`}
+						className={`uk-border-rounded ${styles.productImg}`}
 					/>
 				</div>
 				<div
 					className={`uk-card-body uk-text-center  uk-padding-small`}
 				>
 					<Link to={`/product/${props.id}`}>
-						<h3 className={`uk-card-title`}>{props.productName}</h3>
+						<p className={`uk-card-title`}>{props.productName}</p>
 					</Link>
 					<p>
 						MRP : <s>&#x20B9; {props.realPrice}</s>
@@ -55,12 +56,12 @@ function ProductCard(props) {
 							return (
 								<div>
 									<button
-										className={`uk-button uk-button-primary ${styles.textColorWhite} ${styles.backgroundPrimary} uk-border-rounded uk-width-1-1 uk-padding-remove`}
+										className={`uk-button uk-button-primary uk-border-rounded uk-width-1-1 uk-padding-remove ${styles.buttonGradient}`}
 										onClick={() =>
 											increaseQuantity(props.id, 1)
 										}
 									>
-										Add to cart
+										Add <FiShoppingCart />
 									</button>
 								</div>
 							);
