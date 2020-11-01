@@ -155,14 +155,18 @@ function ProductPage(props) {
 							</h4>
 						</div>
 						<div className={`uk-flex uk-margin-small`}>
-							<QuantityControl id={productId} />
-							<button
-								className={`uk-button uk-button-primary uk-margin-small-left uk-border-rounded`}
-								onClick={() => buyNow()}
-							>
-								{" "}
-								Buy Now
-							</button>
+							<div>
+								<QuantityControl id={productId} />
+							</div>
+							<div>
+								<button
+									className={`uk-button uk-button-primary uk-margin-small-left uk-border-rounded  ${styles.buttonGradient}`}
+									onClick={() => buyNow()}
+								>
+									{" "}
+									Buy Now
+								</button>
+							</div>
 						</div>
 						<p>Some description of the product</p>
 						<p className={`uk-text-meta`}>
