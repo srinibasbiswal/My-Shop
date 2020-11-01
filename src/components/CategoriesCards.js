@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { category } from "../data/category";
+import { searchTypes } from "../data/enums/searchType";
+import { withRouter } from "react-router";
+import styles from "../stylesheets/style.module.css";
 
 function CategoriesCards(props) {
-	const [categoryCodeList, setCategoryCodeList] = useState([]);
 	const [categoryList, setCategoryList] = useState([]);
 
-	useEffect(() => {
-		function getCategoryList() {
-			var categoryCodes = [];
-			if (props !== undefined && props.categoryCodeList !== undefined) {
-				categoryCodes = categoryCodes.concat(props.categoryCodeList);
-				if (categoryCodes !== undefined && categoryCodes != []) {
-					setCategoryCodeList(categoryCodes);
-				}
-			}
-		}
+	const searchByCategories = (searchValue) => {
+		const searchType = searchTypes.CATEGORY;
+		props.history.push(`/${searchType}/search/${searchValue}`);
+	};
 
+	useEffect(() => {
 		function fetchCategories() {
 			var categoryDocumentList = [];
-			if (categoryCodeList !== undefined && categoryCodeList !== []) {
+			if (props !== undefined && props.categoryCodeList !== undefined) {
 				categoryDocumentList = category.filter(function (categoryObj) {
-					return categoryCodeList.indexOf(categoryObj.id) != -1;
+					return props.categoryCodeList.indexOf(categoryObj.id) != -1;
 				});
-				console.log(categoryDocumentList);
-				console.log(categoryCodeList);
 				setCategoryList(categoryDocumentList);
 			}
 			if (
@@ -50,55 +45,39 @@ function CategoriesCards(props) {
 				setCategoryList(categories);
 			}
 		}
-		getCategoryList();
 		fetchCategories();
 	}, [props]);
-	console.log(props.search);
-	console.log(categoryList);
-	console.log(categoryCodeList);
-	return (
-		<div>
-			<div
-				className={`uk-width-1-1 uk-margin-medium uk-margin-medium-left`}
-			>
-				<p className={`uk-text-lead `}>Search by category</p>
-			</div>
-			<div
-				class="uk-child-width-1-3@s uk-grid-small uk-grid-match uk-margin  uk-margin-medium-left uk-margin-medium-right"
-				uk-grid={`true`}
-			>
-				<div>
-					<div class="uk-card uk-card-default uk-card-small uk-card-body uk-card-hover">
-						<h3 class="uk-card-title">Default</h3>
-						{console.log("1" + categoryList)}
-						{console.log("2" + categoryCodeList)}
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit.
-						</p>
-					</div>
+
+	if (categoryList !== undefined && categoryList.length > 0) {
+		console.log(categoryList);
+		return (
+			<div className={`uk-card`}>
+				<div className={`uk-width-1-1 uk-margin-medium-left`}>
+					<p className={`uk-text-lead uk-margin-medium-top`}>
+						Search by category
+					</p>
 				</div>
-				<div>
-					<div class="uk-card uk-card-default  uk-card-small uk-card-body uk-card-hover">
-						<h3 class="uk-card-title">Primary</h3>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit.
-						</p>
-					</div>
-				</div>
-				<div>
-					<div class="uk-card uk-card-default  uk-card-small uk-card-body uk-card-hover">
-						<h3 class="uk-card-title">Secondary</h3>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit.
-						</p>
-					</div>
+				<div
+					className={`uk-card uk-card-body uk-flex uk-padding-remove-top `}
+				>
+					{categoryList.map((category, index) => {
+						return (
+							<div
+								className={`uk-card uk-padding-small uk-border-rounded ${styles.buttonGradient} ${styles.secondaryButton}`}
+								onClick={() =>
+									searchByCategories(category[`name`])
+								}
+							>
+								{category[`name`]}
+							</div>
+						);
+					})}
 				</div>
 			</div>
-		</div>
-	);
+		);
+	} else {
+		return null;
+	}
 }
 
-export default CategoriesCards;
+export default withRouter(CategoriesCards);
