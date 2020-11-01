@@ -7,13 +7,19 @@ import { FiBook, FiXSquare } from "react-icons/fi";
 
 function PriceBreakup(props) {
 	const amount = useSelector((state) => state.amount);
+	const authentication = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
 
 	const movetoAddAddress = () => {
-		if (window.location.pathname === "/checkout") {
+		if (
+			window.location.pathname === "/checkout" &&
+			authentication.isLoggedIn
+		) {
 			dispatch(generatePO());
-		} else {
+		} else if (authentication.isLoggedIn) {
 			props.history.push(`/checkout`);
+		} else {
+			props.history.push(`/signup`);
 		}
 	};
 
