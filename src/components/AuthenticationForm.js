@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from "react";
-import SignUpForm from "./Forms/SignUpForm";
+import SignUpForm from "./Forms/SignupForm";
 import LogInForm from "./Forms/LogInForm";
 import styles from "../stylesheets/style.module.css";
+import { withRouter } from "react-router";
+import { useSelector } from "react-redux";
 
-function AuthenticationForm() {
+function AuthenticationForm(props) {
 	const [pathName, setPathName] = useState("SIGNUP");
+	const authentication = useSelector((state) => state.authentication);
 	useEffect(() => {
-		if (window.location.pathname === "/signup") {
-			setPathName("SIGNUP");
-		} else {
-			setPathName("LOGIN");
+		function setPath() {
+			if (window.location.pathname === "/signup") {
+				setPathName("SIGNUP");
+			} else {
+				setPathName("LOGIN");
+			}
 		}
-	}, [window.location.pathname]);
+		function checkIfLoggedIn() {
+			if (authentication !== undefined && authentication.isLoggedIn) {
+				props.history.push(`/`);
+			}
+		}
+		setPath();
+		checkIfLoggedIn();
+	}, [window.location.pathname, authentication]);
 	return (
 		<div
 			className={`uk-card uk-card-default uk-card-body uk-width-1-2@m uk-text-center uk-border-rounded ${styles.customShadow}`}
@@ -70,4 +82,4 @@ function AuthenticationForm() {
 	);
 }
 
-export default AuthenticationForm;
+export default withRouter(AuthenticationForm);
