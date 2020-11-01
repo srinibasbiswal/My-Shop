@@ -4,6 +4,7 @@ import AuthenticationPage from "../pages/AuthenticationPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import HomePage from "../pages/HomePage";
+import PageNotFound from "../pages/PageNotFound";
 import ProductPage from "../pages/ProductPage";
 import ResultPage from "../pages/ResultPage";
 
@@ -22,7 +23,7 @@ function Routes() {
 			<Route path="/checkout" exact component={CheckoutPage} />
 			<Route path="/signup" exact component={AuthenticationPage} />
 			<Route path="/login" exact component={AuthenticationPage} />
-			{/* TODO : Add route for 404 page */}
+			<Route component={PageNotFound} />
 		</Switch>
 	);
 }
