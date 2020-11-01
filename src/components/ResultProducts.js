@@ -9,7 +9,9 @@ function ResultProducts(props) {
 					<div className={`uk-width-1-1 uk-margin-medium`}>
 						<p className={`uk-text-lead  uk-margin-medium-left`}>
 							Showing results for{" "}
-							<span className={`uk-text-primary`}>
+							<span
+								className={`uk-text-primary uk-text-uppercase`}
+							>
 								{props.search}
 							</span>
 						</p>
